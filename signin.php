@@ -8,7 +8,7 @@ if (!isset($_SESSION)) {
     <head>
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
-        <link rel="stylesheet" href="style_cyberpunk.css">
+        <link rel="stylesheet" href="style_dark.css">
         <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
         <script src="validate_sform.js"></script>
         <title>Webovka</title>
@@ -83,20 +83,21 @@ if (!isset($_SESSION)) {
             </div>
         </header>
         <main>
-            <div class="signin-container">
-                <form id="signin" class="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                    <span><?php echo $loginErr;?></span><br>
-                    <label for="username">Uživatelské jméno:<span><?php echo $usernameErr;?></span></label><br>
-                    <input type="text" name="username" value="<?php echo isset($_POST["username"]) ? $_POST["username"] : ''; ?>" pattern="^([a-zA-Z0-9_-]){1,30}$" required><br>
-                    <span id="username_error"></span><br>
+            <div class="center_inline_flex">
+                <div class="signin-container">
+                    <form id="signin" class="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <span><?php echo $loginErr;?></span><br>
+                        <label for="username">Uživatelské jméno:<span><?php echo $usernameErr;?></span></label><br>
+                        <input type="text" name="username" value="<?php echo isset($_POST["username"]) ? $_POST["username"] : ''; ?>" pattern="^([a-zA-Z0-9_-]){1,30}$" required><br>
+                        <span id="username_error"></span><br>
 
-                    <label for="pwd">Heslo:<span><?php echo $pwdErr;?></span></label><br>
-                    <input type="password" name="pwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
-                    <span id="pwd_error"></span><br>
-                    
-                    <label for="signin_submit" class="visuallyhidden">Potvrdit: </label>
-                    <input type="submit" id="signin_submit" name="signin_submit" value="Potvrdit"><br>
-                </form>
+                        <label for="pwd">Heslo:<span><?php echo $pwdErr;?></span></label><br>
+                        <input type="password" name="pwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
+                        <span id="pwd_error"></span><br>
+                        
+                        <input type="submit" id="signin_submit" name="signin_submit" value="Potvrdit"><br>
+                    </form>
+                </div>
             </div>
         </main>
         <footer>

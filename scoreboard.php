@@ -8,7 +8,7 @@ if (!isset($_SESSION)) {
     <head>
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
-        <link rel="stylesheet" href="style_cyberpunk.css">
+        <link rel="stylesheet" href="style_dark.css">
         <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
         <title>Webovka</title>
     </head>

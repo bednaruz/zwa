@@ -8,7 +8,7 @@ if (!isset($_SESSION)) {
     <head>
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
-        <link rel="stylesheet" href="style_cyberpunk.css">
+        <link rel="stylesheet" href="style_dark.css">
         <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
         <title>Webovka</title>
     </head>
@@ -36,18 +36,17 @@ if (!isset($_SESSION)) {
             <div class="circle">
                 <div id="theme1"><a href="quizz1.php" name="?quizz=1" class="theme"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a></div>
                 <div id="theme24">
-                    <a href="quizz2.php" name="?quizz=2"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a>
                     <a href="quizz4.php" name="?quizz=4"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a>
+                    <a href="quizz2.php" name="?quizz=2"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a> 
                 </div>
                 <div id="theme35">
-                    <a href="quizz3.php" name="?quizz=3"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a>
                     <a href="quizz5.php" name="?quizz=5"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a>
+                    <a href="quizz3.php" name="?quizz=3"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a>
                 </div>
             </div>
         </main>
         <footer>
             <address class="address-style">
-                Autorka webu: <a class="address-style" rel="author" href="https://www.linkedin.com/in/r%C5%AF%C5%BEena-bedn%C3%A1%C5%99ov%C3%A1-b601a1b6">Růžena Bednářová</a><br>
                 Napište mi: <a class="address-style" href="mailto:ruzenabed@gmail.com">ruzenabed@gmail.com</a>
             </address>
         </footer>

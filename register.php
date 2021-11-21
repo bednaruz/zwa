@@ -8,7 +8,7 @@ if (!isset($_SESSION)) {
     <head>
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
-        <link rel="stylesheet" href="style_cyberpunk.css">
+        <link rel="stylesheet" href="style_dark.css">
         <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
         <script src="pwd_strength_bar.js"></script>
         <script src="validate_rform.js"></script>
@@ -99,39 +99,40 @@ if (!isset($_SESSION)) {
             </div>
         </header>
         <main>
-            <div class="register-container">
-                <form id="register" class="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                    <label for="username">Uživatelské jméno: *</label><br>
-                    <input type="text" name="username" pattern="^([a-zA-Z0-9_-]){1,30}$" required><br>
-                    <span id="username_error"><?php echo $usernameErr;?></span><br>
+            <div class="center_inline_flex">
+                <div class="register-container">
+                    <form id="register" class="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <label for="username">Uživatelské jméno: *</label><br>
+                        <input type="text" name="username" pattern="^([a-zA-Z0-9_-]){1,30}$" required><br>
+                        <span id="username_error"><?php echo $usernameErr;?></span><br>
 
-                    <label for="mail">E-mail: *</label><br>
-                    <input type="email" name="mail" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required><br>
-                    <span id="mail_error"><?php echo $mailErr;?></span><br>
+                        <label for="mail">E-mail: *</label><br>
+                        <input type="email" name="mail" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required><br>
+                        <span id="mail_error"><?php echo $mailErr;?></span><br>
 
-                    <label for="birthyear">Rok narození:</label><br>
-                    <input type="number" name="birthyear" value="2008" pattern="[1910-2017]{4}"><br>
-                    <span id="birthyear_error"></span><br>
+                        <label for="birthyear">Rok narození:</label><br>
+                        <input type="number" name="birthyear" value="2008" pattern="[1910-2017]{4}"><br>
+                        <span id="birthyear_error"></span><br>
 
-                    Už jsi v něčem programoval/a?<br>
-                    <input type="radio" name="programmed" value="yes">
-                    <label for="programmed">Ano</label><br>
-                    <input type="radio" name="programmed" value="no" checked="checked">
-                    <label for="programmed">Ne</label><br>
-                    <span id="programmed_error"></span><br>
+                        Už jsi v něčem programoval/a?<br>
+                        <input type="radio" name="programmed" value="yes">
+                        <label for="programmed">Ano</label><br>
+                        <input type="radio" name="programmed" value="no" checked="checked">
+                        <label for="programmed">Ne</label><br>
+                        <span id="programmed_error"></span><br>
 
-                    <label for="fpwd">Heslo: *</label><br>
-                    <input type="password" name="fpwd" id="fpwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
-                    <meter id="pwd_meter" low="33" high="66" max="100" optimum="70" value="0"></meter><br>
-                    <span id="pwd_error"><?php echo $pwdErr;?></span><br>
+                        <label for="fpwd">Heslo: *</label><br>
+                        <input type="password" name="fpwd" id="fpwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
+                        <meter id="pwd_meter" low="33" high="66" max="100" optimum="70" value="0"></meter><br>
+                        <span id="pwd_error"><?php echo $pwdErr;?></span><br>
 
-                    <label for="spwd">Heslo znovu: *</label><br>
-                    <input type="password" name="spwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
-                    <span id="match_error"><?php echo $pwdErr;?></span><br>
+                        <label for="spwd">Heslo znovu: *</label><br>
+                        <input type="password" name="spwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
+                        <span id="match_error"><?php echo $pwdErr;?></span><br>
 
-                    <label for="reqister_submit" class="visuallyhidden">Potvrdit: </label>
-                    <input type="submit" name="register_submit" value="Potvrdit"><br>
-                </form>
+                        <input type="submit" name="register_submit" value="Potvrdit"><br>
+                    </form>
+                </div>
             </div>
         </main>
         <footer>
