@@ -83,8 +83,8 @@ if (!isset($_SESSION)) {
             </div>
         </header>
         <main>
-            <div class="center_inline_flex">
-                <div class="signin-container">
+            <div class="center-inline-flex">
+                <div class="main-container signin-container">
                     <form id="signin" class="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                         <span><?php echo $loginErr;?></span><br>
                         <label for="username">Uživatelské jméno:<span><?php echo $usernameErr;?></span></label><br>

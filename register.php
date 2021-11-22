@@ -99,8 +99,8 @@ if (!isset($_SESSION)) {
             </div>
         </header>
         <main>
-            <div class="center_inline_flex">
-                <div class="register-container">
+            <div class="center-inline-flex">
+                <div class="main-container register-container">
                     <form id="register" class="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                         <label for="username">Uživatelské jméno: *</label><br>
                         <input type="text" name="username" pattern="^([a-zA-Z0-9_-]){1,30}$" required><br>

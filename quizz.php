@@ -14,26 +14,49 @@ if (!isset($_SESSION)) {
     </head>
     <body>
         <?php
-        $link = $_GET['quizz'];
-        if ($link == '1'){
+        require_once "connect.php";
+
+        if (isset($_GET['quizz'])){
+            $link = $_GET['quizz'];
+            if ($link == '1'){
+                $quizz = "quizz1";
+                require_once "quizz1.php";
+            }
+            if ($link == '2'){
+                $quizz = "quizz2";
+                require_once "quizz2.php";
+            }
+            if ($link == '3'){
+                $quizz = "quizz3";
+                require_once "quizz3.php";
+            }
+            if ($link == '4'){
+                $quizz = "quizz4";
+                require_once "quizz4.php";
+            }
+            if ($link == '5'){
+                $quizz = "quizz5";
+                require_once "quizz5.php";
+            }
+        } else {
+            $_GET['quizz'] = '1';
+            $quizz = "quizz1";
             require_once "quizz1.php";
         }
-        if ($link == '2'){
-            require_once "quizz2.php";
-        }
-        if ($link == '3'){
-            require_once "quizz3.php";
-        }
-        if ($link == '4'){
-            require_once "quizz4.php";
-        }
-        if ($link == '5'){
-            require_once "quizz5.php";
-        }
         
-        //$query = "SELECT id, question, answer FROM <?php
-        //while()
-
+        $query = "SELECT id, question, answer FROM $quizz";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            echo "Quizz content succesfully obtained " . $quizz;
+        } else {
+            echo "Failed to obtain " . $quizz . " content";
+        }
+        while ($row = mysqli_fetch_array($result)){
+            $ids[] = $row[0];
+            $questions[] = $row[1];
+            $answers[] = $row[2];
+        }
+        echo "Id of quizz is " . $_SESSION['index'];
         require_once "buttons.php";
         ?>
         <header>
@@ -48,7 +71,15 @@ if (!isset($_SESSION)) {
             </div>
         </header>
         <main>
-        <?php $conn->close();?>
+            <div class="center-inline-flex">
+                <div class="main-container quizz-container">
+                    <?php
+                    //echo $questions[$_SESSION['index']];
+                    ?>
+                    <input type="submit" id="quizz_next" name="quizz_next" value="Další"><br>
+                </div>
+            </div>
+            <?php $conn->close();?>
         </main>
         <footer>
             <address class="address-style">

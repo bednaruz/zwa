@@ -118,22 +118,24 @@ footer {
     height: 7vw;
 }
 /*----------------------------------------------*/
-.center_inline_flex {
+.center-inline-flex {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     margin: 3vw auto;
 }
-/*-----------------register.php-----------------*/
 
-.register-container {
+.main-container {
     display: inline-flex;
     border-radius: 3vw;
     background: black;
     border-style: solid;
-    border-color: blueviolet;
     padding: 3%;
+}
+/*-----------------register.php-----------------*/
+.register-container {
+    border-color: blueviolet;
 }
 
 .register-form {
@@ -143,12 +145,7 @@ footer {
 /*----------------------------------------------*/
 /*----------------signin.php--------------------*/
 .signin-container {
-    display: inline-flex;
-    border-style: solid;
     border-color:lightseagreen;
-    border-radius: 3vw;
-    background: black;
-    padding: 2%;
 }
 /*----------------------------------------------*/
 /*-------------------inputs---------------------*/
@@ -188,7 +185,7 @@ input[type=submit]:hover {
 }
 /*----------------------------------------------*/
 /*-----------------aboutus.php------------------*/
-.witches_photo {
+.witches-photo {
     width: 30vw;
     height: auto;
     margin: 5vw 5vw 25vw 25vw;
@@ -202,7 +199,12 @@ input[type=submit]:hover {
     margin: 5vw;
 }
 /*----------------------------------------------*/
-
+/*------------------quizz.php-------------------*/
+/*maybe make randomized color picker - from an JS array*/
+.question-container {
+    border-color:mediumspringgreen;
+}
+/*----------------------------------------------*/
 span {
     color: red;
 }

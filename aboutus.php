@@ -26,7 +26,7 @@ if (!isset($_SESSION)) {
             </div>
         </header>
         <main>
-            <img src="images/witches.png" alt="čarodějky" class="witches_photo">
+            <img src="images/witches.png" alt="čarodějky" class="witches-photo">
             <img src="images/logo.png" alt="logo" class="logo"><br>
             Jsme studentky Fakulty elektrotechnické Českého vysokého učení technického v Praze a říkáme si wITches.
             Pořádáme akce zdarma pro děti od 5. - 9. třídy, zábavně a bez nároku na odměnu.
