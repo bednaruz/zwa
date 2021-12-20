@@ -208,8 +208,45 @@ input[type=submit]:hover {
 span {
     color: red;
 }
-
-table, th, td {
-    border: 1px solid ghostwhite;
+/*------------------scoreboard.php--------------*/
+.score-table {
+    display: grid;
+    align-items: center;
+    margin: 1vw auto;
 }
 
+.score-header {
+    display: grid;
+    grid-row: 1;
+    border-bottom: 5px outset darkturquoise;
+    padding: 1% 8%;
+    text-align: center;
+}
+
+.score-content {
+    display: grid;
+    padding: 1%;
+    align-self: center;
+}
+
+.score-row {
+    display: grid;
+    text-align: center;
+}
+
+.score-rank {
+    display: grid;
+    grid-column: 1;
+}
+
+.score-username {
+    display: grid;
+    grid-column: 2;
+    font-weight: bold;
+}
+
+.score-score {
+    display: grid;
+    grid-column: 3;
+}
+/*----------------------------------------------*/

@@ -20,7 +20,8 @@ if (mysqli_query($conn, $sql)) {
             VALUES 
                 ('Kolik je 1+1?', 2),
                 ('A co 12*25?', 300),
-                ('Jaké číslo se používá pro error Not found', 404)";
+                ('Jaké číslo se používá pro error Not found', 404),
+                ('aSDGASDGASDF', 23546)";
     if (mysqli_query($conn, $sql)) {
         echo "Questions inserted correctly";
     } else {

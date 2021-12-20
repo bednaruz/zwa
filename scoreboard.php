@@ -33,25 +33,25 @@ if (!isset($_SESSION)) {
             </div>
         </header>
         <main>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Pořadí</th>
-                        <th>Uživatelské jméno</th>
-                        <th>Skóre</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="score-table">
+                <div class="score-header">
+                    <div class="score-rank">Pořadí</div>
+                    <div class="score-username">Uživatelské jméno</div>
+                    <div class="score-score">Skóre</div>
+                </div>
+                <div class="score-content">
                     <?php
-                    while($row = mysqli_fetch_array($result)) {
-                        echo '<td>'.$row[0].'</td>';
-                        echo '<td>'.$row[1].'</td>';
-                        echo '<td>'.$row[2].'</td>';
-                    }
-                    $conn->close();
+                        while($row = mysqli_fetch_array($result)) {
+                            echo '<div class="score-row">';
+                                echo '<div class="score-rank">'.$row[0].'</div>';
+                                echo '<div class="score-username">'.$row[1].'</div>';
+                                echo '<div class="score-score">'.$row[2].'</div>';
+                            echo '</div>';
+                        }
+                        $conn->close();
                     ?>
-                </tbody>
-            </table>
+                </div>
+            </div>
         </main>
         <footer>
             <address class="address-style">
