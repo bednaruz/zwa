@@ -16,8 +16,21 @@ if (!isset($_SESSION)) {
         <?php
         require_once "connect.php";
 
-        $query = "SELECT id, username, score FROM users ORDER by users.score DESC";
+        if (isset($_GET["page"])) {    
+            $page = $_GET["page"];    
+        } else {    
+            $page = 1;    
+        }
+
+        $rows_per_page = 10;
+        $query = "SELECT id, username, score FROM users ORDER BY users.score DESC";
         $result = mysqli_query($conn, $query);
+        $total = mysqli_num_rows($result);  //total number of rows in scoreboard
+        $total_pages = ceil($total/$rows_per_page); //how many pages will i need
+
+        $start_from = ($page-1) * $rows_per_page;
+        $query = "SELECT id, username, score FROM users ORDER BY users.score DESC, users.id ASC LIMIT $start_from, $rows_per_page";
+        $result = mysqli_query($conn, $query);  //only selected number of rows
 
         require_once "buttons.php";
         ?>
@@ -25,7 +38,7 @@ if (!isset($_SESSION)) {
             <div class="menu-container">
                 <button class="button menu-button" onclick="location.href = 'index.php';">Domů</button>
                 <button class="button menu-button" onclick="location.href = 'scoreboard.php';">Žebříček hráčů</button>
-                <button class="button menu-button" onclick="location.href = 'aboutus.php';">Kdo jsme?</button>
+                <button class="button menu-button" onclick="location.href = 'whatnext.php';">Co dál?</button>
             </div>
             <div class="sign-container">
                 <button class="button menu-button" onclick="location.href = '<?php echo $_SESSION['sign_location']?>';"><?php echo $_SESSION['sign_button']?></button>
@@ -48,6 +61,16 @@ if (!isset($_SESSION)) {
                                 echo '<div class="score-score">'.$row[2].'</div>';
                             echo '</div>';
                         }
+
+                        for ($i = 1; $i <= $total_pages; $i++) {   
+                            if ($i == $page) {   
+                                $pagLink = '<a class="active" href="scoreboard.php?page='.$i.'">'.$i.'</a>';   
+                            } else {   
+                                $pagLink = '<a href="scoreboard.php?page='.$i.'">'.$i.'</a>';    
+                            }
+                            echo $pagLink;
+                        };
+
                         $conn->close();
                     ?>
                 </div>

@@ -75,7 +75,7 @@ if (!isset($_SESSION)) {
             <div class="menu-container">
                 <button class="button menu-button" onclick="location.href = 'index.php';">Domů</button>
                 <button class="button menu-button" onclick="location.href = 'scoreboard.php';">Žebříček hráčů</button>
-                <button class="button menu-button" onclick="location.href = 'aboutus.php';">Kdo jsme?</button>
+                <button class="button menu-button" onclick="location.href = 'whatnext.php';">Co dál?</button>
             </div>
             <div class="sign-container">
                 <button class="button menu-button" onclick="location.href = '<?php echo $_SESSION['sign_location']?>';"><?php echo $_SESSION['sign_button']?></button>
