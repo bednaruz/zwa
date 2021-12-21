@@ -26,16 +26,95 @@ if (!isset($_SESSION)) {
             </div>
         </header>
         <main>
-            <img src="images/logo.png" alt="logo" class="logo"><br>
-            <a href="https://witches.fel.cvut.cz/" target="_blank">zde</a>
-            3D tisk - Prusa, thingsverse, Fusion360
-            stavebnice - mBoti, legoRoboti, microbit, boffin
-            součástky - LaskaArduino, dratek, gmc?
-            ctf pro děti
-            scratch
-            wITches
-            ruzne souteze
-            nejakej youtube kanal
+            <div class="hobby">
+                <div class="hobby_title">3D tisk</div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"><a class="hobby_img" href="https://www.prusa3d.com/cs/" target="_BLANK"><img src=images/prusa.jpg alt="tiskárna Průša"></a></div>
+                    <div class="hobby_column2"></div>
+                </div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"></div>
+                    <div class="hobby_column2"><a class="hobby_img" href="https://www.thingiverse.com/" target="_BLANK"><img src=images/3dmodel.png alt="3D model"></a></div>
+                </div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"><a class="hobby_img" href="https://www.autodesk.com/products/fusion-360/free-trial" target="_BLANK"><img src=images/fusion.png alt="program Fusion360"></a></div>
+                    <div class="hobby_column2"></div>
+                </div>
+
+                <div class="hobby_title">Stavebnice</div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"><a class="hobby_img" href="https://store.makeblock.com/products/diy-coding-robot-kits-mbot" target="_BLANK"><img src=images/mBot.jpg alt="mBot"></a></div>
+                    <div class="hobby_column2"></div>
+                </div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"></div>
+                    <div class="hobby_column2"><a class="hobby_img" href="https://www.lego.com/cs-cz/themes/mindstorms/about" target="_BLANK"><img src=images/legomindstorms.png alt="robot lego mindstorms"></a></div>
+                </div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"><a class="hobby_img" href="https://microbit.org/" target="_BLANK"><img src=images/microbit.jpg alt="micro:bit"></a></div>
+                    <div class="hobby_column2"></div>
+                </div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"></div>
+                    <div class="hobby_column2"><a class="hobby_img" href="https://boffin.cz/" target="_BLANK"><img src=images/boffin.jpg alt="stavebnice boffin"></a></div>
+                </div>
+
+                <div class="hobby_title">DIY</div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"></div>
+                    <div class="hobby_column2"><a class="hobby_img" href="https://www.laskakit.cz/" target="_BLANK"><img src=images/laskaarduino.png alt="laskarduino"></a></div>
+                </div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"><a class="hobby_img" href="https://dratek.cz/" target="_BLANK"><img src=images/dratek.png alt="drátek"></a></div>
+                    <div class="hobby_column2"></div>
+                </div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"></div>
+                    <div class="hobby_column2"><a class="hobby_img" href="https://www.gme.cz/" target="_BLANK"><img src=images/gm.jpg alt="GM electronics"></a></div>
+                </div>
+                
+                <div class="hobby_title">CTF</div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"><a class="hobby_img" href="https://picoctf.org/index#picogym" target="_BLANK"><img src=images/picoCTF.png alt="pico capture the flag"></a></div>
+                    <div class="hobby_column2"></div>
+                </div>
+
+                <div class="hobby_title">Programování</div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"></div>
+                    <div class="hobby_column2"><a class="hobby_img" ref="https://scratch.mit.edu/" target="_BLANK"><img src=images/scratch.png alt="scratch"></a></div>
+                </div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"><a class="hobby_img" href="https://ide.mblock.cc/" target="_BLANK"><img src=images/mBotcode.jpg alt="mBlock code editor"></a></div>
+                    <div class="hobby_column2"></div>
+                </div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"></div>
+                    <div class="hobby_column2"><a class="hobby_img" href="https://bootcamp.berkeley.edu/blog/most-in-demand-programming-languages/" target="_BLANK"><img src=images/code.jpg alt="kód"></a></div>
+                </div>
+                
+                <div class="hobby_title">wITches</div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"><a class="hobby_img" href="https://witches.fel.cvut.cz/" target="_blank"><img class="hobby_img" src="images/logo.png" alt="logo"></a></div>
+                    <div class="hobby_column2"></div>
+                </div>
+
+                <div class="hobby_title">Soutěže</div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"></div>
+                    <div class="hobby_column2"><a class="hobby_img" href="https://www.ibobr.cz/" target="_BLANK"><img src=images/bobrik.png alt="Bobřík informatiky"></a></div>
+                </div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"><a class="hobby_img" href="https://robosoutez.fel.cvut.cz/" target="_BLANK"><img src=images/robosoutez.jpg alt="robosoutěž"></a></div>
+                    <div class="hobby_column2"></div>
+                </div>
+
+                <div class="hobby_title">Kutilové</div>
+                <div class="hobby_row">
+                    <div class="hobby_column1"></div>
+                    <div class="hobby_column2"><a class="hobby_img" href="https://www.instructables.com/" target="_BLANK"><img src=images/instructables.jpg alt="instuctables"></a></div>
+                </div>
+            </div>
         </main>
         <footer>
             <address class="address-style">

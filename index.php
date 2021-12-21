@@ -34,14 +34,14 @@ if (!isset($_SESSION)) {
         </header>
         <main>
             <div class="circle">
-                <div id="theme1"><a href="quizz.php" name="?quizz=1" class="theme"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a></div>
+                <div id="theme1"><a href="quizz.php" name="?quizz=1" class="theme"><img class="theme-image" src="images/picir.gif" alt="pi"></a></div>
                 <div id="theme24">
-                    <a href="quizz.php" name="?quizz=4"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a>
-                    <a href="quizz.php" name="?quizz=2"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a> 
+                    <a href="quizz.php" name="?quizz=4"><img class="theme-image" src="images/picir.gif" alt="pi"></a>
+                    <a href="quizz.php" name="?quizz=2"><img class="theme-image" src="images/picir.gif" alt="pi"></a> 
                 </div>
                 <div id="theme35">
-                    <a href="quizz.php" name="?quizz=5"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a>
-                    <a href="quizz.php" name="?quizz=3"><img class="theme-image" src="images/pi_cir.gif" alt="pi"></a>
+                    <a href="quizz.php" name="?quizz=5"><img class="theme-image" src="images/picir.gif" alt="pi"></a>
+                    <a href="quizz.php" name="?quizz=3"><img class="theme-image" src="images/picir.gif" alt="pi"></a>
                 </div>
             </div>
         </main>
