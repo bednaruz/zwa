@@ -85,7 +85,7 @@ if (!isset($_SESSION)) {
                     <div class="hobby_column2"><a class="hobby_img" ref="https://scratch.mit.edu/" target="_BLANK"><img src=images/scratch.png alt="scratch"></a></div>
                 </div>
                 <div class="hobby_row">
-                    <div class="hobby_column1"><a class="hobby_img" href="https://ide.mblock.cc/" target="_BLANK"><img src=images/mbotcode.png alt="mBlock code editor"></a></div>
+                    <div class="hobby_column1"><a class="hobby_img" href="https://ide.mblock.cc/" target="_BLANK"><img src=images/mbotcode.jpg alt="mBlock code editor"></a></div>
                     <div class="hobby_column2"></div>
                 </div>
                 <div class="hobby_row">
