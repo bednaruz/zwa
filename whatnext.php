@@ -85,7 +85,7 @@ if (!isset($_SESSION)) {
                     <div class="hobby_column2"><a class="hobby_img" ref="https://scratch.mit.edu/" target="_BLANK"><img src=images/scratch.png alt="scratch"></a></div>
                 </div>
                 <div class="hobby_row">
-                    <div class="hobby_column1"><a class="hobby_img" href="https://ide.mblock.cc/" target="_BLANK"><img src=images/mBotcode.jpg alt="mBlock code editor"></a></div>
+                    <div class="hobby_column1"><a class="hobby_img" href="https://ide.mblock.cc/" target="_BLANK"><img src=images/mbotcode.png alt="mBlock code editor"></a></div>
                     <div class="hobby_column2"></div>
                 </div>
                 <div class="hobby_row">
@@ -112,7 +112,7 @@ if (!isset($_SESSION)) {
                 <div class="hobby_title">Kutilové</div>
                 <div class="hobby_row">
                     <div class="hobby_column1"></div>
-                    <div class="hobby_column2"><a class="hobby_img" href="https://www.instructables.com/" target="_BLANK"><img src=images/instructables.jpg alt="instuctables"></a></div>
+                    <div class="hobby_column2"><a class="hobby_img" href="https://www.instructables.com/" target="_BLANK"><img src=images/instructables.png alt="instuctables"></a></div>
                 </div>
             </div>
         </main>
