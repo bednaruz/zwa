@@ -8,9 +8,9 @@ if (!isset($_SESSION)) {
     <head>
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
-        <link rel="stylesheet" href="style_dark.css">
+        <link rel="stylesheet" href="css/style_dark.css">
         <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
-        <title>Webovka</title>
+        <title>Let's learn 💻</title>
     </head>
     <body>
         <?php
@@ -19,7 +19,7 @@ if (!isset($_SESSION)) {
         } else {
             echo "Session isnt set";
         }
-        require_once "buttons.php";
+        require_once "help/buttons.php";
         ?>
         <header>
             <div class="menu-container">
@@ -34,20 +34,20 @@ if (!isset($_SESSION)) {
         </header>
         <main>
             <div class="circle">
-                <div id="theme1"><a href="quizz.php" name="?quizz=1" class="theme"><img class="theme-image" src="images/picir.gif" alt="pi"></a></div>
+                <div id="theme1"><a href="quizzes/quizz.php" name="?quizz=1" class="theme"><img class="theme-image" src="img/picir.gif" alt="pi"></a></div>
                 <div id="theme24">
-                    <a href="quizz.php" name="?quizz=4"><img class="theme-image" src="images/picir.gif" alt="pi"></a>
-                    <a href="quizz.php" name="?quizz=2"><img class="theme-image" src="images/picir.gif" alt="pi"></a> 
+                    <a href="quizzes/quizz.php" name="?quizz=4"><img class="theme-image" src="img/picir.gif" alt="pi"></a>
+                    <a href="quizzes/quizz.php" name="?quizz=2"><img class="theme-image" src="img/picir.gif" alt="pi"></a> 
                 </div>
                 <div id="theme35">
-                    <a href="quizz.php" name="?quizz=5"><img class="theme-image" src="images/picir.gif" alt="pi"></a>
-                    <a href="quizz.php" name="?quizz=3"><img class="theme-image" src="images/picir.gif" alt="pi"></a>
+                    <a href="quizzes/quizz.php" name="?quizz=5"><img class="theme-image" src="img/picir.gif" alt="pi"></a>
+                    <a href="quizzes/quizz.php" name="?quizz=3"><img class="theme-image" src="img/picir.gif" alt="pi"></a>
                 </div>
             </div>
         </main>
         <footer>
             <address class="address-style">
-                Napište mi: <a class="address-style" href="mailto:ruzenabed@gmail.com">ruzenabed@gmail.com</a>
+                Email: <a class="address-style" href="mailto:ruzenabed@gmail.com">ruzenabed@gmail.com</a>
             </address>
         </footer>
     </body>

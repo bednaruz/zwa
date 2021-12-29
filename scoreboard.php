@@ -8,13 +8,13 @@ if (!isset($_SESSION)) {
     <head>
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
-        <link rel="stylesheet" href="style_dark.css">
+        <link rel="stylesheet" href="css/style_dark.css">
         <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
-        <title>Webovka</title>
+        <title>Let's learn 💻</title>
     </head>
     <body>
         <?php
-        require_once "connect.php";
+        require_once "help/connect.php";
 
         if (isset($_GET["page"])) {    
             $page = $_GET["page"];    
@@ -32,7 +32,7 @@ if (!isset($_SESSION)) {
         $query = "SELECT id, username, score FROM users ORDER BY users.score DESC, users.id ASC LIMIT $start_from, $rows_per_page";
         $result = mysqli_query($conn, $query);  //only selected number of rows
 
-        require_once "buttons.php";
+        require_once "help/buttons.php";
         ?>
         <header>
             <div class="menu-container">
@@ -78,8 +78,7 @@ if (!isset($_SESSION)) {
         </main>
         <footer>
             <address class="address-style">
-                Autorka webu: <a class="address-style" rel="author" href="https://www.linkedin.com/in/r%C5%AF%C5%BEena-bedn%C3%A1%C5%99ov%C3%A1-b601a1b6">Růžena Bednářová</a><br>
-                Napište mi: <a class="address-style" href="mailto:ruzenabed@gmail.com">ruzenabed@gmail.com</a>
+                Email: <a class="address-style" href="mailto:ruzenabed@gmail.com">ruzenabed@gmail.com</a>
             </address>
         </footer>
     </body>

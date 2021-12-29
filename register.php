@@ -8,15 +8,15 @@ if (!isset($_SESSION)) {
     <head>
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
-        <link rel="stylesheet" href="style_dark.css">
+        <link rel="stylesheet" href="css/style_dark.css">
         <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
-        <script src="pwd_strength_bar.js"></script>
-        <script src="validate_rform.js"></script>
-        <title>Webovka</title>
+        <script src="js/pwd_strength_bar.js"></script>
+        <script src="js/validate_rform.js"></script>
+        <title>Let's learn 💻</title>
     </head>
     <body>
         <?php
-        require_once "connect.php";
+        require_once "help/connect.php";
 
         $sql = "CREATE TABLE users(
         id INT(255) AUTO_INCREMENT,
@@ -72,7 +72,7 @@ if (!isset($_SESSION)) {
                 if ($_POST["fpwd"]!= $_POST["spwd"]) {
                     $pwdErr = "Hesla se neshodují";
                 } else {
-                    $pwd = password_hash($fpwd, PASSWORD_DEFAULT); // Creates a password hash
+                    $pwd = password_hash($fpwd, PASSWORD_DEFAULT);
                     $sql = "INSERT INTO users(username, mail, birthyear, programmed, pwd) VALUES ('$username', '$mail', $birthyear, $programmed, '$pwd')";
                     if ($conn->query($sql)) {
                         header("location: signin.php");
@@ -85,7 +85,7 @@ if (!isset($_SESSION)) {
 
         $conn->close();
 
-        require_once "buttons.php";
+        require_once "help/buttons.php";
         ?>
         <header>
             <div class="menu-container">
@@ -137,8 +137,7 @@ if (!isset($_SESSION)) {
         </main>
         <footer>
             <address class="address-style">
-                Autorka webu: <a class="address-style" rel="author" href="https://www.linkedin.com/in/r%C5%AF%C5%BEena-bedn%C3%A1%C5%99ov%C3%A1-b601a1b6">Růžena Bednářová</a><br>
-                Napište mi: <a class="address-style" href="mailto:ruzenabed@gmail.com">ruzenabed@gmail.com</a>
+                Email: <a class="address-style" href="mailto:ruzenabed@gmail.com">ruzenabed@gmail.com</a>
             </address>
         </footer>
     </body>
