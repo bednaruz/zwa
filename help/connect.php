@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$user = "root";
-$pass = "nevermind93";
-$dbname = "zwa";
+$user = "bednaruz";
+$pass = "webove aplikace";
+$dbname = "bednaruz";
 
 $conn = mysqli_connect($servername, $user, $pass, $dbname);
 
