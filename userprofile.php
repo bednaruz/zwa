@@ -18,8 +18,11 @@ if (!isset($_SESSION)) {
         <title>Let's learn 💻</title>
     </head>
     <body>
+        <?php
+            require_once "help/buttons.php";
+            require_once "help/resultstable.php";
+        ?>
         <header>
-            <?php require_once "help/buttons.php";?>
             <div class="menu-container">
                 <button class="button menu-button" onclick="location.href = 'index.php';">Domů</button>
                 <button class="button menu-button" onclick="location.href = 'scoreboard.php';">Žebříček hráčů</button>
@@ -31,8 +34,52 @@ if (!isset($_SESSION)) {
             </div>
         </header>
         <main>
-        Ahoj <?php echo $_SESSION["username"]?>!<br>
-        Zde je tvoje skóre: <?php echo $_SESSION["score"]?>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <div><img src="img/avatars/<?php echo $_SESSION['avatar']?>"></div>
+                    <div class="avatar"><button>Změnit avatar</button>
+                        <form class="avatar-content" method="POST">
+                            <input type="image" id="green" src="img/avatars/green.png">
+                            <input type="image" id="red" src="img/avatars/red.png">
+                            <input type="image" id="blue" src="img/avatars/blue.png">
+                            <input type="image" id="purple" src="img/avatars/purple.png">
+                            <input type="image" id="white" src="img/avatars/white.png">
+                        </form>
+                    </div>
+                </div>
+                <div class="user-greeting">
+                    Ahoj <?php echo $_SESSION["username"]?>!<br>
+                    Tvoje celkové skóre: <?php echo $_SESSION["score"]?>
+                    id: <?php echo $_SESSION["id"]?>
+                </div>
+                <div class="user-score">
+                    <div>
+                        <img src="">
+                        Skóre: <?php echo $_SESSION["score1"];?>
+                        Čas: <?php echo $_SESSION["time1"]?>
+                    </div>
+                    <div>
+                        <img src="">
+                        Skóre: <?php echo $_SESSION["score2"]?>
+                        Čas: <?php echo $_SESSION["time2"]?>
+                    </div>
+                    <div>
+                        <img src="">
+                        Skóre: <?php echo $_SESSION["score3"]?>
+                        Čas: <?php echo $_SESSION["time3"]?>
+                    </div>
+                    <div>
+                        <img src="">
+                        Skóre: <?php echo $_SESSION["score4"]?>
+                        Čas: <?php echo $_SESSION["time4"]?>
+                    </div>
+                    <div>
+                        <img src="">
+                        Skóre: <?php echo $_SESSION["score5"]?>
+                        Čas: <?php echo $_SESSION["time5"]?>
+                    </div>
+                </div>
+            </div>
         </main>
         <footer>
             <address class="address-style">

@@ -157,7 +157,7 @@ input[type=text],[type=password],[type=number],[type=email] {
     height: 30px;
 }
 
-input[type=submit] {
+.submit {
     background-color: cyan;
     border: hidden;
     border-radius: 20px;
@@ -273,5 +273,27 @@ span {
 .score-score {
     display: grid;
     grid-column: 3;
+}
+/*----------------------------------------------*/
+/*---------------userprofile.php----------------*/
+.avatar-content {
+    display: none;
+}
+
+.avatar:hover .avatar-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.avatar button {
+    background-color:black;
+    border: solid deeppink 2px;
+    border-radius: 20px;
+    padding: 10px;
+    text-align: center;
+    color: ghostwhite;
+    display: inline-block;
+    font-size: 1vw;
+    margin: 10px 2px;
 }
 /*----------------------------------------------*/

@@ -22,6 +22,11 @@ if (!isset($_SESSION)) {
     <body>
         <?php
         require_once "help/connect.php";
+        require_once "help/resultstable.php";
+        require_once "tempdrop.php";
+        echo "Table dropped";
+
+        $img = "green.png";
 
         $sql = "CREATE TABLE users(
         id INT(255) AUTO_INCREMENT,
@@ -31,7 +36,8 @@ if (!isset($_SESSION)) {
         birthyear SMALLINT(8) DEFAULT NULL,
         programmed TINYINT(1) DEFAULT NULL,
         pwd VARCHAR(255) NOT NULL,
-        score INT(255) DEFAULT 0
+        score INT(255) DEFAULT 0,
+        avatar VARCHAR(20) DEFAULT '$img'
         )";
             
         if ($conn->query($sql)) {
@@ -80,7 +86,21 @@ if (!isset($_SESSION)) {
                     $pwd = password_hash($fpwd, PASSWORD_DEFAULT);
                     $sql = "INSERT INTO users(username, mail, birthyear, programmed, pwd) VALUES ('$username', '$mail', $birthyear, $programmed, '$pwd')";
                     if ($conn->query($sql)) {
-                        header("location: signin.php");
+                        $sql = "SELECT id FROM users WHERE username='$username'";
+                        if($result = $conn->query($sql)) {
+                            $id = $result->fetch_row()[0];
+                            echo "Found the id of user";
+
+                            $sql = "INSERT INTO results(userid) VALUES ($id)";
+                            if($conn->query($sql)) {
+                                echo "Result record for new user created succesfully";
+                            } else {
+                                echo "Error: " . $sql . " : " . $conn->error;
+                            }
+                            header("location: signin.php");
+                        } else {
+                            echo "Error: " . $sql . " : " . $conn->error;
+                        }
                     } else {
                         echo "Error: " . $sql . "<br>" . $conn->error;
                     }
@@ -135,7 +155,7 @@ if (!isset($_SESSION)) {
                         <input type="password" name="spwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
                         <span id="match_error"><?php echo $pwdErr;?></span><br>
 
-                        <input type="submit" name="register_submit" value="Potvrdit"><br>
+                        <input type="submit" class="submit" name="register_submit" value="Potvrdit"><br>
                     </form>
                 </div>
             </div>
