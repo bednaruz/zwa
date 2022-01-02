@@ -1,5 +1,5 @@
 <?php
-  require_once "help/connect.php";
+  require_once "connect.php";
 
   $time = "0h 0min 0s";
 

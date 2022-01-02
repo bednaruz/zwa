@@ -1,7 +1,8 @@
 <?php
-    if (!isset($_SESSION)) {
-        session_start();
-    }
+ob_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -9,7 +10,7 @@
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
         <link rel="stylesheet" href="../css/style_dark.css">
-        <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
+        <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
         <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon/favicon-16x16.png">
@@ -18,37 +19,9 @@
     </head>
     <body>
         <?php
-            require_once "../help/connect.php";
-            
-            $_SESSION["quizz"] = "quizz1";
-            
-            $sql = "CREATE TABLE quizz1(
-            id INT(255) AUTO_INCREMENT,
-            Unique(id),
-            question VARCHAR(50) NOT NULL,
-            answer VARCHAR(50) DEFAULT NULL
-            )";
-            
-            if (mysqli_query($conn, $sql)) {
-                echo "Table quizz1 created successfully";
-                $sql = "INSERT INTO
-                            quizz1(question, answer)
-                        VALUES 
-                            ('Kolik je 1+1?', 2),
-                            ('A co 12*25?', 300),
-                            ('Jaké číslo se používá pro error Not found', 404),
-                            ('aSDGASDGASDF', 23546)";
-                if (mysqli_query($conn, $sql)) {
-                    echo "Questions inserted correctly";
-                } else {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
-                }        
-            } else {
-                echo "Error creating table: " . $conn->error;
-            }
-            
-            require_once "pagination.php";
             require_once "../help/buttons.php";
+            require_once "../help/resultstable.php";
+            require_once "../help/connect.php";
         ?>
         <header>
             <div class="menu-container">
@@ -62,13 +35,44 @@
             </div>
         </header>
         <main>
-            <div class='center-inline-flex'>
-                <div class='main-container'>
-                    <form id="quizz" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                        <?php echo $row['id'] . ' ' . $row['question'] . '</br>';?>
-                        <input type="text" id="answer" name="answer"><br>
-                        <input type="submit" id="submit_answer" name="submit_answer" value="Další"><br>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <div><img src="../img/avatars/admin.png"></div>
+                </div>
+                <div class="user-greeting">
+                    Admin<br>
+                    <form method="POST">
+                      <label for>Vyhledat hráče:</label>
+                      Odstranit hráče:
                     </form>
+                    Statistiky:
+                </div>
+                <div class="user-score">
+                    <div>
+                        <img src="">
+                        Skóre: <?php echo $_SESSION["score1"];?>
+                        Čas: <?php echo $_SESSION["time1"]?>
+                    </div>
+                    <div>
+                        <img src="">
+                        Skóre: <?php echo $_SESSION["score2"]?>
+                        Čas: <?php echo $_SESSION["time2"]?>
+                    </div>
+                    <div>
+                        <img src="">
+                        Skóre: <?php echo $_SESSION["score3"]?>
+                        Čas: <?php echo $_SESSION["time3"]?>
+                    </div>
+                    <div>
+                        <img src="">
+                        Skóre: <?php echo $_SESSION["score4"]?>
+                        Čas: <?php echo $_SESSION["time4"]?>
+                    </div>
+                    <div>
+                        <img src="">
+                        Skóre: <?php echo $_SESSION["score5"]?>
+                        Čas: <?php echo $_SESSION["time5"]?>
+                    </div>
                 </div>
             </div>
         </main>
