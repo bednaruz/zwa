@@ -62,6 +62,7 @@ footer {
     font-family: 'Dosis', sans-serif;
     padding: 6% 10%;
     margin: 3%;
+    text-decoration: none;
 }
 
 .register-button {
@@ -259,23 +260,28 @@ span {
     text-align: center;
 }
 
-.score-rank {
+.score-avatar {
     display: grid;
     grid-column: 1;
 }
 
-.score-username {
+.score-rank {
     display: grid;
     grid-column: 2;
+}
+
+.score-username {
+    display: grid;
+    grid-column: 3;
     font-weight: bold;
 }
 
 .score-score {
     display: grid;
-    grid-column: 3;
+    grid-column: 4;
 }
 /*----------------------------------------------*/
-/*---------------userprofile.php----------------*/
+/*-----userprofile.php and adminprofile.php-----*/
 .avatar-content {
     display: none;
 }

@@ -28,13 +28,13 @@ if (!isset($_SESSION)) {
         ?>
         <header>
             <div class="menu-container">
-                <button class="button menu-button" onclick="location.href = 'index.php';">Domů</button>
-                <button class="button menu-button" onclick="location.href = 'scoreboard.php';">Žebříček hráčů</button>
-                <button class="button menu-button" onclick="location.href = 'whatnext.php';">Co dál?</button>
+                <a href="index.php" class="button menu-button">Domů</a>
+                <a href="scoreboard.php" class="button menu-button">Žebříček hráčů</a>
+                <a href="whatnext.php" class="button menu-button">Co dál?</a>
             </div>
             <div class="sign-container">
-                <button class="button menu-button" onclick="location.href = '<?php echo $_SESSION['sign_location']?>';"><?php echo $_SESSION['sign_button']?></button>
-                <button class="button register-button" onclick="location.href = '<?php echo $_SESSION['register_location']?>';"><?php echo $_SESSION['register_button']?></button>
+                <a href="<?php echo $_SESSION['sign_location']?>" class="button menu-button"><?php echo $_SESSION['sign_button']?></a>
+                <a href="<?php echo $_SESSION['register_location']?>" class="button register-button"><?php echo $_SESSION['register_button']?></a>
             </div>
         </header>
         <main>

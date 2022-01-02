@@ -1,4 +1,5 @@
 <?php
+ob_start();
     if (!isset($_SESSION)) {
         session_start();
     }
@@ -20,24 +21,24 @@
         <?php
             require_once "../help/connect.php";
             
-            $_SESSION["quizz"] = "quizz1";
+            $_SESSION["quizz"] = "quizz4";
             
-            $sql = "CREATE TABLE quizz1(
+            $sql = "CREATE TABLE quizz4(
             id INT(255) AUTO_INCREMENT,
             Unique(id),
-            question VARCHAR(50) NOT NULL,
+            question VARCHAR(255) NOT NULL,
             answer VARCHAR(50) DEFAULT NULL
             )";
             
             if (mysqli_query($conn, $sql)) {
-                echo "Table quizz1 created successfully";
+                echo "Table quizz4 created successfully";
                 $sql = "INSERT INTO
-                            quizz1(question, answer)
+                            quizz4(question, answer)
                         VALUES 
-                            ('Kolik je 1+1?', 2),
-                            ('A co 12*25?', 300),
-                            ('Jaké číslo se používá pro error Not found', 404),
-                            ('aSDGASDGASDF', 23546)";
+                            ('Jak se spočítá napětí pomocí Ohmova zákona?', 'U=R*I'),
+                            ('Kolik Hz je frekvence střídavého napětí v zásuvkách v Evropě?', 50),
+                            ('A co v USA?', 60),
+                            ('Který druh proudu je pro člověka nebezpečnější? Stejnosměrný (DC) nebo střídavý (AC)?', 'AC')";
                 if (mysqli_query($conn, $sql)) {
                     echo "Questions inserted correctly";
                 } else {
@@ -52,19 +53,19 @@
         ?>
         <header>
             <div class="menu-container">
-                <button class="button menu-button" onclick="location.href = '../index.php';">Domů</button>
-                <button class="button menu-button" onclick="location.href = '../scoreboard.php';">Žebříček hráčů</button>
-                <button class="button menu-button" onclick="location.href = '../whatnext.php';">Co dál?</button>
+                <a href="../index.php" class="button menu-button">Domů</a>
+                <a href="../scoreboard.php" class="button menu-button">Žebříček hráčů</a>
+                <a href="../whatnext.php" class="button menu-button">Co dál?</a>
             </div>
             <div class="sign-container">
-                <button class="button menu-button" onclick="location.href = '../<?php echo $_SESSION['sign_location']?>';"><?php echo $_SESSION['sign_button']?></button>
-                <button class="button register-button" onclick="location.href = '../<?php echo $_SESSION['register_location']?>';"><?php echo $_SESSION['register_button']?></button>
+                <a href="../<?php echo $_SESSION['sign_location']?>" class="button menu-button"><?php echo $_SESSION['sign_button']?></a>
+                <a href="../<?php echo $_SESSION['register_location']?>" class="button register-button"><?php echo $_SESSION['register_button']?></a>
             </div>
         </header>
         <main>
             <div class='center-inline-flex'>
                 <div class='main-container'>
-                    <form id="quizz" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                    <form id="quizz" method="post" action="">
                         <?php echo $row['id'] . ' ' . $row['question'] . '</br>';?>
                         <input type="text" id="answer" name="answer"><br>
                         <input type="submit" id="submit_answer" name="submit_answer" value="Další"><br>

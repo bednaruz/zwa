@@ -47,13 +47,13 @@ if (!isset($_SESSION)) {
         ?>
         <header>
             <div class="menu-container">
-                <button class="button menu-button" onclick="location.href = '../index.php';">Domů</button>
-                <button class="button menu-button" onclick="location.href = '../scoreboard.php';">Žebříček hráčů</button>
-                <button class="button menu-button" onclick="location.href = '../whatnext.php';">Co dál?</button>
+                <a href="../index.php" class="button menu-button">Domů</a>
+                <a href="../scoreboard.php" class="button menu-button">Žebříček hráčů</a>
+                <a href="../whatnext.php" class="button menu-button">Co dál?</a>
             </div>
             <div class="sign-container">
-                <button class="button menu-button" onclick="location.href = '../<?php echo $_SESSION['sign_location']?>';"><?php echo $_SESSION['sign_button']?></button>
-                <button class="button register-button" onclick="location.href = '../<?php echo $_SESSION['register_location']?>';"><?php echo $_SESSION['register_button']?></button>
+                <a href="../<?php echo $_SESSION['sign_location']?>" class="button menu-button"><?php echo $_SESSION['sign_button']?></a>
+                <a href="../<?php echo $_SESSION['register_location']?>" class="button register-button"><?php echo $_SESSION['register_button']?></a>
             </div>
         </header>
         <main>
@@ -77,28 +77,28 @@ if (!isset($_SESSION)) {
                 </div>
                 <div class="user-score">
                     <div>
-                        <img src="">
-                        Skóre: <?php echo $_SESSION["score1"];?>
+                        <img src="../img/themes/pi.png" alt="pi">
+                        Skóre: <?php echo $_SESSION["score1"]?><br>
                         Čas: <?php echo $_SESSION["time1"]?>
                     </div>
                     <div>
-                        <img src="">
-                        Skóre: <?php echo $_SESSION["score2"]?>
+                        <img src="../img/themes/code.png" alt="code parentheses">
+                        Skóre: <?php echo $_SESSION["score2"]?><br>
                         Čas: <?php echo $_SESSION["time2"]?>
                     </div>
                     <div>
-                        <img src="">
-                        Skóre: <?php echo $_SESSION["score3"]?>
+                        <img src="../img/themes/internet.png" alt="internet">
+                        Skóre: <?php echo $_SESSION["score3"]?><br>
                         Čas: <?php echo $_SESSION["time3"]?>
                     </div>
                     <div>
-                        <img src="">
-                        Skóre: <?php echo $_SESSION["score4"]?>
+                        <img src="../img/themes/transistor.png" alt="transistor">
+                        Skóre: <?php echo $_SESSION["score4"]?><br>
                         Čas: <?php echo $_SESSION["time4"]?>
                     </div>
                     <div>
-                        <img src="">
-                        Skóre: <?php echo $_SESSION["score5"]?>
+                        <img src="../img/themes/chemistry.png" alt="chemistry">
+                        Skóre: <?php echo $_SESSION["score5"]?><br>
                         Čas: <?php echo $_SESSION["time5"]?>
                     </div>
                 </div>

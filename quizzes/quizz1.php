@@ -1,4 +1,5 @@
 <?php
+ob_start();
     if (!isset($_SESSION)) {
         session_start();
     }
@@ -19,7 +20,7 @@
     <body>
         <?php
             require_once "../help/connect.php";
-            
+
             $_SESSION["quizz"] = "quizz1";
             
             $sql = "CREATE TABLE quizz1(
@@ -36,8 +37,8 @@
                         VALUES 
                             ('Kolik je 1+1?', 2),
                             ('A co 12*25?', 300),
-                            ('Jaké číslo se používá pro error Not found', 404),
-                            ('aSDGASDGASDF', 23546)";
+                            ('Kolik je 2^10', 1024),
+                            ('3*3 + 1 - 80/4 = ', -10)";
                 if (mysqli_query($conn, $sql)) {
                     echo "Questions inserted correctly";
                 } else {
@@ -52,22 +53,22 @@
         ?>
         <header>
             <div class="menu-container">
-                <button class="button menu-button" onclick="location.href = '../index.php';">Domů</button>
-                <button class="button menu-button" onclick="location.href = '../scoreboard.php';">Žebříček hráčů</button>
-                <button class="button menu-button" onclick="location.href = '../whatnext.php';">Co dál?</button>
+                <a href="../index.php" class="button menu-button">Domů</a>
+                <a href="../scoreboard.php" class="button menu-button">Žebříček hráčů</a>
+                <a href="../whatnext.php" class="button menu-button">Co dál?</a>
             </div>
             <div class="sign-container">
-                <button class="button menu-button" onclick="location.href = '../<?php echo $_SESSION['sign_location']?>';"><?php echo $_SESSION['sign_button']?></button>
-                <button class="button register-button" onclick="location.href = '../<?php echo $_SESSION['register_location']?>';"><?php echo $_SESSION['register_button']?></button>
+                <a href="../<?php echo $_SESSION['sign_location']?>" class="button menu-button"><?php echo $_SESSION['sign_button']?></a>
+                <a href="../<?php echo $_SESSION['register_location']?>" class="button register-button"><?php echo $_SESSION['register_button']?></a>
             </div>
         </header>
         <main>
             <div class='center-inline-flex'>
                 <div class='main-container'>
-                    <form id="quizz" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                    <form method="post" action="">
                         <?php echo $row['id'] . ' ' . $row['question'] . '</br>';?>
-                        <input type="text" id="answer" name="answer"><br>
-                        <input type="submit" id="submit_answer" name="submit_answer" value="Další"><br>
+                        <input type="text" name="answer"><br>
+                        <input type="submit" name="submit_answer" value="Další"><br>
                     </form>
                 </div>
             </div>
