@@ -1,8 +1,8 @@
 <?php
-ob_start();
-if (!isset($_SESSION)) {
-    session_start();
-}
+    ob_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -20,7 +20,6 @@ if (!isset($_SESSION)) {
     <body>
         <?php
             require_once "../help/buttons.php";
-            require_once "../help/resultstable.php";
             require_once "../help/connect.php";
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -30,25 +29,25 @@ if (!isset($_SESSION)) {
                     if ($result = $conn->query($sql)) {
                         echo "Query sent successfuly";
                         if ($overall = $result->fetch_row()) {
-                            $sql = "SELECT * FROM results WHERE userid='$overall[0]'";
+                            $sql = "SELECT * FROM results WHERE id=$overall[0]";
                             if ($result = $conn->query($sql)) {
                                 echo "Quizz results retrieved successfully";
-                                $quizz_results = $result->fetch_row();
+                                $results = $result->fetch_row();
                                 $_SESSION["overall"] = $overall;
-                                $_SESSION["quizz_results"] = $quizz_results;
+                                $_SESSION["score_results"] = [$results[1],$results[3],$results[5],$results[7],$results[9]];
+                                $_SESSION["time_results"] = [$results[2],$results[4],$results[6],$results[8],$results[10]];
+                                
                                 header("location: show.php");
                             } else {
-                                echo "Second sql failed<br>";
                                 echo "Error: " . $sql . " : " . $conn->error;
                             }
                         } else {
                             echo "No such user";
                         }
                     } else {
-                        echo "First sql failed<br>";
                         echo "Error: " . $sql . " : " . $conn->error;
                     }
-                } elseif (isset($_POST["delete_form"]) && !empty($_POST["delete"])) {
+                } elseif (isset($_POST["delete_form"]) && !empty($_POST["delete"] && $_POST["delete"] != "admin")) {
                     $name = $_POST["delete"];
                     $sql = "SELECT * FROM users WHERE username='$name'";
                     if ($result = $conn->query($sql)) {
@@ -58,15 +57,11 @@ if (!isset($_SESSION)) {
                             $sql = "DELETE FROM users WHERE username='$name'";
                             if ($result = $conn->query($sql)) {
                                 echo "User deleted from users successfuly";
-                                $sql = "DELETE FROM results WHERE userid='$id'";
+                                $sql = "DELETE FROM results WHERE id=$id";
                                 if ($result = $conn->query($sql)) {
                                     echo "User quizz results deleted successfuly";
-                                    if(isset($_SESSION["overall"])) {
-                                        unset($_SESSION["overall"]);
-                                        unset($_SESSION["quizz_results"]);
-                                    }
                                 } else {
-                                    echo "Could not delete user quizz results";
+                                    echo "Could not delete user results";
                                 }
                             } else {
                                 echo "Could not delete user from users";

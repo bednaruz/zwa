@@ -1,8 +1,8 @@
 <?php
-ob_start();
-if (!isset($_SESSION)) {
-    session_start();
-}
+    ob_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -10,7 +10,7 @@ if (!isset($_SESSION)) {
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
         <link rel="stylesheet" href="css/style_dark.css">
-        <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
+        <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
         <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
@@ -19,12 +19,12 @@ if (!isset($_SESSION)) {
     </head>
     <body>
         <?php
-        if (isset($_SESSION["loggedin"])){
-            echo $_SESSION["loggedin"];
-        } else {
-            echo "Session isnt set";
-        }
-        require_once "help/buttons.php";
+            if (isset($_SESSION["loggedin"])){
+                echo $_SESSION["loggedin"];
+            } else {
+                echo "Session isnt set";
+            }
+            require_once "help/buttons.php";
         ?>
         <header>
             <div class="menu-container">
@@ -39,7 +39,7 @@ if (!isset($_SESSION)) {
         </header>
         <main>
             <div class="circle">
-                <div id="theme1"><a href="quizzes/quizz1.php" id="quizz1" class="theme"><img class="theme-image" src="img/themes/pi.png" alt="pi"></a></div>
+                <div id="theme1"><a href="quizzes/quizz1.php" id="quizz1" class="theme" action=""><img class="theme-image" src="img/themes/pi.png" alt="pi"></a></div>
                 <div id="theme24">
                     <a href="quizzes/quizz4.php" id="quizz4"><img class="theme-image" src="img/themes/transistor.png" alt="transistor"></a>
                     <a href="quizzes/quizz2.php" id="quizz2"><img class="theme-image" src="img/themes/code.png" alt="code parenthesis"></a> 

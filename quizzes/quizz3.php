@@ -21,7 +21,7 @@ ob_start();
         <?php
             require_once "../help/connect.php";
             
-            $_SESSION["quizz"] = "quizz3";
+            $_SESSION["quizz"] = "3";
             
             $sql = "CREATE TABLE quizz3(
             id INT(255) AUTO_INCREMENT,
@@ -65,7 +65,7 @@ ob_start();
         <main>
             <div class='center-inline-flex'>
                 <div class='main-container'>
-                    <form id="quizz" method="post" action="">
+                    <form id="quizz" method="post">
                         <?php echo $row['id'] . ' ' . $row['question'] . '</br>';?>
                         <input type="text" id="answer" name="answer"><br>
                         <input type="submit" id="submit_answer" name="submit_answer" value="Další"><br>

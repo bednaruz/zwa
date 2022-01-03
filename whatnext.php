@@ -1,8 +1,8 @@
 <?php
-ob_start();
-if (!isset($_SESSION)) {
-    session_start();
-}
+    ob_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -10,7 +10,7 @@ if (!isset($_SESSION)) {
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
         <link rel="stylesheet" href="css/style_dark.css">
-        <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
+        <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
         <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">

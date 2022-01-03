@@ -1,8 +1,8 @@
 <?php
-ob_start();
-if (!isset($_SESSION)) {
-    session_start();
-}
+    ob_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -10,7 +10,7 @@ if (!isset($_SESSION)) {
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
         <link rel="stylesheet" href="css/style_dark.css">
-        <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
+        <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
         <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
@@ -19,25 +19,25 @@ if (!isset($_SESSION)) {
     </head>
     <body>
         <?php
-        require_once "help/connect.php";
+            require_once "help/connect.php";
 
-        if (isset($_GET["page"])) {    
-            $page = $_GET["page"];    
-        } else {    
-            $page = 1;    
-        }
+            if (isset($_GET["page"])) {    
+                $page = $_GET["page"];    
+            } else {    
+                $page = 1;    
+            }
 
-        $rows_per_page = 10;
-        $query = "SELECT avatar, id, username, score FROM users ORDER BY users.score DESC";
-        $result = mysqli_query($conn, $query);
-        $total = mysqli_num_rows($result);  //total number of rows in scoreboard
-        $total_pages = ceil($total/$rows_per_page); //how many pages will i need
+            $rows_per_page = 10;
+            $query = "SELECT avatar, id, username, score FROM users ORDER BY users.score DESC";
+            $result = mysqli_query($conn, $query);
+            $total = mysqli_num_rows($result);  //total number of rows in scoreboard
+            $total_pages = ceil($total/$rows_per_page); //how many pages will i need
 
-        $start_from = ($page-1) * $rows_per_page;
-        $query = "SELECT avatar, id, username, score FROM users ORDER BY users.score DESC, users.id ASC LIMIT $start_from, $rows_per_page";
-        $result = mysqli_query($conn, $query);  //only selected number of rows
+            $start_from = ($page-1) * $rows_per_page;
+            $query = "SELECT avatar, id, username, score FROM users ORDER BY users.score DESC, users.id ASC LIMIT $start_from, $rows_per_page";
+            $result = mysqli_query($conn, $query);  //only selected number of rows
 
-        require_once "help/buttons.php";
+            require_once "help/buttons.php";
         ?>
         <header>
             <div class="menu-container">

@@ -1,8 +1,8 @@
 <?php
-ob_start();
-if (!isset($_SESSION)) {
-    session_start();
-}
+    ob_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -10,7 +10,7 @@ if (!isset($_SESSION)) {
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
         <link rel="stylesheet" href="css/style_dark.css">
-        <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
+        <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
         <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
@@ -21,96 +21,99 @@ if (!isset($_SESSION)) {
     </head>
     <body>
         <?php
-        require_once "help/connect.php";
-        require_once "help/resultstable.php";
-        //require_once "tempdrop.php";
-        //echo "Table dropped";
+            require_once "help/connect.php";
+            require_once "help/resultstable.php";
+            //require_once "tempdrop.php";
+            //echo "Table dropped";
 
-        $img = "green";
+            $img = "green";
 
-        $sql = "CREATE TABLE users(
-        id INT(255) AUTO_INCREMENT,
-        Unique(id),
-        username VARCHAR(30) NOT NULL,
-        mail VARCHAR(50) NOT NULL,
-        birthyear SMALLINT(8) DEFAULT NULL,
-        programmed TINYINT(1) DEFAULT NULL,
-        pwd VARCHAR(255) NOT NULL,
-        score INT(255) DEFAULT 0,
-        avatar VARCHAR(20) DEFAULT '$img'
-        )";
-            
-        if ($conn->query($sql)) {
-            echo "Table users created successfully";
-        } else {
-            echo "Error creating table: " . $conn->error;
-        }
-
-        $username = $mail = $birthyear = $fpwd = $spwd = "";
-        $programmed = 0;
-        $usernameErr = $mailErr = $pwdErr = "";
-
-        function Test_input($data)
-        {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (empty($_POST["username"])) {
-                $usernameErr = "Uživatelské jméno je povinné";
+            $sql = "CREATE TABLE users(
+            id INT(255) AUTO_INCREMENT,
+            Unique(id),
+            username VARCHAR(30) NOT NULL,
+            mail VARCHAR(50) NOT NULL,
+            birthyear SMALLINT(8) DEFAULT NULL,
+            programmed TINYINT(1) DEFAULT NULL,
+            pwd VARCHAR(255) NOT NULL,
+            score INT(255) DEFAULT 0,
+            avatar VARCHAR(20) DEFAULT '$img'
+            )";
+                
+            if ($conn->query($sql)) {
+                echo "Table users created successfully";
             } else {
-                $username = Test_input($_POST["username"]);
+                echo "Error creating table: " . $conn->error;
             }
-            if (empty($_POST["mail"])) {
-                $mailErr = "E-mail je povinný";
-            } else {
-                $mail = Test_input($_POST["mail"]);
+
+            $username = $mail = $birthyear = $fpwd = $spwd = "";
+            $programmed = 0;
+            $usernameErr = $mailErr = $pwdErr = "";
+
+            function Test_input($data)
+            {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
             }
-            $birthyear = Test_input($_POST["birthyear"]);
-            if (Test_input($_POST["programmed"]) == "yes") {
-                $programmed = 1;
-            } else {
-                $programmed = 0;
-            }
-            if (empty($_POST["fpwd"]) or empty($_POST["spwd"])) {
-                $pwdErr = "Heslo je povinné";
-            } else {
-                $fpwd = Test_input($_POST["fpwd"]);
-                $spwd = Test_input($_POST["spwd"]);
-                if ($_POST["fpwd"]!= $_POST["spwd"]) {
-                    $pwdErr = "Hesla se neshodují";
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (empty($_POST["username"])) {
+                    $usernameErr = "Uživatelské jméno je povinné";
                 } else {
-                    $pwd = password_hash($fpwd, PASSWORD_DEFAULT);
-                    $sql = "INSERT INTO users(username, mail, birthyear, programmed, pwd) VALUES ('$username', '$mail', $birthyear, $programmed, '$pwd')";
-                    if ($conn->query($sql)) {
-                        $sql = "SELECT id FROM users WHERE username='$username'";
-                        if($result = $conn->query($sql)) {
-                            $id = $result->fetch_row()[0];
-                            echo "Found the id of user";
+                    $username = Test_input($_POST["username"]);
+                }
+                if (empty($_POST["mail"])) {
+                    $mailErr = "E-mail je povinný";
+                } else {
+                    $mail = Test_input($_POST["mail"]);
+                }
+                $birthyear = Test_input($_POST["birthyear"]);
+                if (Test_input($_POST["programmed"]) == "yes") {
+                    $programmed = 1;
+                } else {
+                    $programmed = 0;
+                }
+                if (empty($_POST["fpwd"]) or empty($_POST["spwd"])) {
+                    $pwdErr = "Heslo je povinné";
+                } else {
+                    $fpwd = Test_input($_POST["fpwd"]);
+                    $spwd = Test_input($_POST["spwd"]);
+                    if ($_POST["fpwd"]!= $_POST["spwd"]) {
+                        $pwdErr = "Hesla se neshodují";
+                    } else {
+                        $pwd = password_hash($fpwd, PASSWORD_DEFAULT);
+                        $sql = "INSERT INTO users(username, mail, birthyear, programmed, pwd) VALUES ('$username', '$mail', $birthyear, $programmed, '$pwd')";
+                        if ($conn->query($sql)) {
+                            $sql = "SELECT id FROM users WHERE username='$username'";
+                            if($result = $conn->query($sql)) {
+                                $_SESSION["id"] = $result->fetch_row()[0];
+                                $id = $_SESSION["id"];
+                                echo "Found the id of user";
 
-                            $sql = "INSERT INTO results(userid) VALUES ($id)";
-                            if($conn->query($sql)) {
-                                echo "Result record for new user created succesfully";
+                                require_once "help/resultstable.php";
+                                $sql = "INSERT INTO results(id) VALUES ($id)";
+                                if ($conn->query($sql)) {
+                                    echo "<br>New record in results created succesfully<br>";
+                                } else {
+                                    echo "Error: " . $sql . " : " . $conn->error;
+                                }
+
+                                header("location: signin.php");
                             } else {
                                 echo "Error: " . $sql . " : " . $conn->error;
                             }
-                            header("location: signin.php");
                         } else {
-                            echo "Error: " . $sql . " : " . $conn->error;
+                            echo "Error: " . $sql . "<br>" . $conn->error;
                         }
-                    } else {
-                        echo "Error: " . $sql . "<br>" . $conn->error;
                     }
-                }
-            }      
-        }
+                }      
+            }
 
-        $conn->close();
+            $conn->close();
 
-        require_once "help/buttons.php";
+            require_once "help/buttons.php";
         ?>
         <header>
             <div class="menu-container">

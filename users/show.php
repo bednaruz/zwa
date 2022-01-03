@@ -1,8 +1,8 @@
 <?php
-ob_start();
-if (!isset($_SESSION)) {
-    session_start();
-}
+    ob_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -24,7 +24,7 @@ if (!isset($_SESSION)) {
             require_once "../help/connect.php";
 
             if (!isset($_SESSION["overall"])) {
-              header("location: ../index.php");
+                header("location: ../index.php");
             }
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -34,19 +34,22 @@ if (!isset($_SESSION)) {
                     if ($result = $conn->query($sql)) {
                         echo "Query sent successfuly";
                         if ($overall = $result->fetch_row()) {
-                            $sql = "SELECT * FROM results WHERE userid='$overall[0]'";
+                            $sql = "SELECT * FROM results WHERE id=$overall[0]";
                             if ($result = $conn->query($sql)) {
                                 echo "Quizz results retrieved successfully";
-                                $quizz_results = $result->fetch_row();
+                                $results = $result->fetch_row();
+                                $_SESSION["overall"] = $overall;
+                                $_SESSION["score_results"] = [$results[1],$results[3],$results[5],$results[7],$results[9]];
+                                $_SESSION["time_results"] = [$results[2],$results[4],$results[6],$results[8],$results[10]];
+                                
+                                header("location: show.php");
                             } else {
-                                echo "Second sql failed<br>";
                                 echo "Error: " . $sql . " : " . $conn->error;
                             }
                         } else {
                             echo "No such user";
                         }
                     } else {
-                        echo "First sql failed<br>";
                         echo "Error: " . $sql . " : " . $conn->error;
                     }
                 } elseif (isset($_POST["delete_form"]) && !empty($_POST["delete"])) {
@@ -59,12 +62,13 @@ if (!isset($_SESSION)) {
                             $sql = "DELETE FROM users WHERE username='$name'";
                             if ($result = $conn->query($sql)) {
                                 echo "User deleted from users successfuly";
-                                $sql = "DELETE FROM results WHERE userid='$id'";
+                                $sql = "DELETE FROM results WHERE id=$id";
                                 if ($result = $conn->query($sql)) {
                                     echo "User quizz results deleted successfuly";
                                     if(isset($_SESSION["overall"])) {
                                       unset($_SESSION["overall"]);
-                                      unset($_SESSION["quizz_results"]);
+                                      unset($_SESSION["score_results"]);
+                                      unset($_SESSION["time_results"]);
                                     }
                                     header("location: adminprofile.php");
                                 } else {
@@ -124,31 +128,36 @@ if (!isset($_SESSION)) {
                   ?><br>
                   Celkové skóre: <?php echo $_SESSION["overall"][6]?><br>
                 </div>
+                <div class="user-greeting">
+                    Ahoj <?php echo $_SESSION["username"]?>!<br>
+                    Tvoje celkové skóre: <?php echo $_SESSION["score"]?>
+                    id: <?php echo $_SESSION["id"]?>
+                </div>
                 <div class="user-score">
                     <div>
                         <img src="../img/themes/pi.png" alt="pi">
-                        Skóre: <?php echo $_SESSION["quizz_results"][1]?><br>
-                        Čas: <?php echo $_SESSION["quizz_results"][2]?>
+                        Skóre: <?php echo $_SESSION["score_results"][0]?><br>
+                        Čas: <?php echo $_SESSION["time_results"][0]?>
                     </div>
                     <div>
                         <img src="../img/themes/code.png" alt="code parentheses">
-                        Skóre: <?php echo $_SESSION["quizz_results"][3]?><br>
-                        Čas: <?php echo $_SESSION["quizz_results"][4]?>
+                        Skóre: <?php echo $_SESSION["score_results"][1]?><br>
+                        Čas: <?php echo $_SESSION["time_results"][1]?>
                     </div>
                     <div>
                         <img src="../img/themes/internet.png" alt="internet">
-                        Skóre: <?php echo $_SESSION["quizz_results"][5]?><br>
-                        Čas: <?php echo $_SESSION["quizz_results"][6]?>
+                        Skóre: <?php echo $_SESSION["score_results"][2]?><br>
+                        Čas: <?php echo $_SESSION["time_results"][2]?>
                     </div>
                     <div>
                         <img src="../img/themes/transistor.png" alt="transistor">
-                        Skóre: <?php echo $_SESSION["quizz_results"][7]?><br>
-                        Čas: <?php echo $_SESSION["quizz_results"][8]?>
+                        Skóre: <?php echo $_SESSION["score_results"][3]?><br>
+                        Čas: <?php echo $_SESSION["time_results"][3]?>
                     </div>
                     <div>
                         <img src="../img/themes/chemistry.png" alt="chemistry">
-                        Skóre: <?php echo $_SESSION["quizz_results"][9]?><br>
-                        Čas: <?php echo $_SESSION["quizz_results"][10]?>
+                        Skóre: <?php echo $_SESSION["score_results"][4]?><br>
+                        Čas: <?php echo $_SESSION["time_results"][4]?>
                     </div>
                 </div>
             </div>

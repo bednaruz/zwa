@@ -1,8 +1,8 @@
 <?php
-ob_start();
-if (!isset($_SESSION)) {
-    session_start();
-}
+    ob_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -10,7 +10,7 @@ if (!isset($_SESSION)) {
         <meta charset="utf-8">
         <meta name="author" content="Růžena Bednářová">
         <link rel="stylesheet" href="css/style_dark.css">
-        <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
+        <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
         <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
@@ -20,79 +20,71 @@ if (!isset($_SESSION)) {
     </head>
     <body>
         <?php
-        if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-            header("location: index.php");
-            exit;
-        }
- 
-        require_once "help/connect.php";
-        require_once "help/resultstable.php";
- 
-        $username = $pwd = $mail = $birthyear = $programmed = $hashed_password = "";
-        $usernameErr = $pwdErr = $loginErr = "";
+            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+                header("location: index.php");
+                exit;
+            }
+    
+            require_once "help/connect.php";
+            require_once "help/resultstable.php";
+    
+            $username = $pwd = $mail = $birthyear = $programmed = $hashed_password = "";
+            $usernameErr = $pwdErr = $loginErr = "";
 
-        function Test_input($data)
-        {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
- 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
- 
-            if (empty($_POST["username"])) {
-                $usernameErr = "Vyplňte uživatelské jméno, prosím";
-            } else {
-                $username = Test_input($_POST["username"]);
+            function Test_input($data)
+            {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
             }
     
-            if (empty($_POST["pwd"])) {
-                $pwdErr = "Vyplňte heslo, prosím";
-            } else {
-                $pwd = Test_input($_POST["pwd"]);
-            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-            if (empty($usernameErr) and empty($pwdErr)) {
-                $query = "SELECT id, username, pwd, score, avatar FROM users WHERE username='$username'";
-                $result = mysqli_query($conn, $query);
-                if (mysqli_num_rows($result)) {
-                    $row = mysqli_fetch_array($result);
-                    $hashed_password = $row[2];
-                    if (password_verify($pwd, $hashed_password)) {
-                        $_SESSION["loggedin"] = true;
-                        $_SESSION["username"] = $username;
-                        $_SESSION["score"] = $row[3];
-                        $_SESSION["avatar"] = $row[4];
-                    
-                        $sql = "SELECT * FROM results WHERE userid=$row[0]";
-                        $result = $conn->query($sql);
-                        if ($result) {
-                            $row = $result->fetch_row();
+                if (empty($_POST["username"])) {
+                    $usernameErr = "Vyplňte uživatelské jméno, prosím";
+                } else {
+                    $username = Test_input($_POST["username"]);
+                }
+        
+                if (empty($_POST["pwd"])) {
+                    $pwdErr = "Vyplňte heslo, prosím";
+                } else {
+                    $pwd = Test_input($_POST["pwd"]);
+                }
+        
+                if (empty($usernameErr) and empty($pwdErr)) {
+                    $query = "SELECT id, username, pwd, score, avatar FROM users WHERE username='$username'";
+                    $result = mysqli_query($conn, $query);
+                    if (mysqli_num_rows($result)) {
+                        $row = mysqli_fetch_array($result);
+                        $hashed_password = $row[2];
+                        if (password_verify($pwd, $hashed_password)) {
+                            $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $row[0];
-                            $_SESSION["score1"] = $row[1];
-                            $_SESSION["time1"] = $row[2];
-                            $_SESSION["score2"] = $row[3];
-                            $_SESSION["time2"] = $row[4];
-                            $_SESSION["score3"] = $row[5];
-                            $_SESSION["time3"] = $row[6];
-                            $_SESSION["score4"] = $row[7];
-                            $_SESSION["time4"] = $row[8];
-                            $_SESSION["score5"] = $row[9];
-                            $_SESSION["time5"] = $row[10];
+                            $_SESSION["username"] = $row[1];
+                            $_SESSION["score"] = $row[3];
+                            $_SESSION["avatar"] = $row[4];
+                            
+                            $sql = "SELECT * FROM results WHERE id=$row[0]";
+                            if ($result = $conn->query($sql)) {
+                                $row = $result->fetch_row();
+                                $_SESSION["score_results"] = [$results[1],$results[3],$results[5],$results[7],$results[9]];
+                                $_SESSION["time_results"] = [$results[2],$results[4],$results[6],$results[8],$results[10]];
+                            }
+
                             header("location: index.php");
+                        } else {
+                            $loginErr = "Nesprávné uživatelské jméno nebo heslo";
                         }
                     } else {
-                        $loginErr = "Nesprávné uživatelské jméno nebo heslo";
+                        echo "Error: " . $query . "<br>" . $conn->error;
                     }
-                } else {
-                    echo "Error: " . $query . "<br>" . $conn->error;
                 }
             }
-        }
-        $conn->close();
+            $conn->close();
 
-        require_once "help/buttons.php";
+            require_once "help/buttons.php";
         ?>
         <header>
             <div class="menu-container">
