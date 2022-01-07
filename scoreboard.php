@@ -15,75 +15,151 @@
         <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
         <link rel="manifest" href="img/favicon/site.webmanifest">
+        <script src="js/prevent_resubmit.js"></script>
         <title>Let's learn 💻</title>
     </head>
     <body>
         <?php
             require_once "help/connect.php";
+            require_once "help/buttons.php";
+
+            if($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST["desc"])) {
+                    $_SESSION["ordered"] = "DESC";
+                } else if (isset($_POST["asc"])) {
+                    $_SESSION["ordered"] = "ASC";
+                } else if (isset($_POST["prog"])) {
+                    $_SESSION["prog"] = " WHERE programmed=1 ";
+                } else if (isset($_POST["noprog"])) {
+                    $_SESSION["prog"] = " WHERE programmed=0 ";
+                } else if (isset($_POST["all"])) {
+                    $_SESSION["prog"] = "";
+                }
+                unset($_POST);
+                header("location: scoreboard.php?page=1");
+            } elseif (!isset($_SESSION["prog"])) {
+                $_SESSION["ordered"] = "DESC";
+                $_SESSION["prog"] = "";
+            }
 
             if (isset($_GET["page"])) {    
-                $page = $_GET["page"];    
+                $page = $_GET["page"];
             } else {    
                 $page = 1;    
             }
 
-            $rows_per_page = 10;
-            $query = "SELECT avatar, id, username, score FROM users ORDER BY users.score DESC";
-            $result = mysqli_query($conn, $query);
-            $total = mysqli_num_rows($result);  //total number of rows in scoreboard
-            $total_pages = ceil($total/$rows_per_page); //how many pages will i need
+            $ordered = $_SESSION["ordered"];
+            $programmed = $_SESSION["prog"];
+            $rowsPerPage = 5;
 
-            $start_from = ($page-1) * $rows_per_page;
-            $query = "SELECT avatar, id, username, score FROM users ORDER BY users.score DESC, users.id ASC LIMIT $start_from, $rows_per_page";
-            $result = mysqli_query($conn, $query);  //only selected number of rows
+            $sql = "SELECT
+                        avatar, id, username, score
+                    FROM
+                        users
+                    $programmed
+                    ORDER BY
+                        users.score $ordered";
 
-            require_once "help/buttons.php";
+            if (!($result = $conn->query($sql))) {
+                $conn->close();
+                header("location: img/marvin.png");
+                die();
+            }
+
+            $total = $result->num_rows;
+            $totalPages = ceil($total/$rowsPerPage);
+            $startFrom = ($page-1) * $rowsPerPage;
+
+            $sql = "SELECT
+                        avatar, id, username, score
+                    FROM
+                        users
+                    $programmed
+                    ORDER BY
+                        users.score $ordered,
+                        users.id ASC
+                    LIMIT
+                        $startFrom, $rowsPerPage";
+
+            if (!($result = $conn->query($sql))) {
+                $conn->close();
+                header("location: img/marvin.png");
+                die();
+            }
         ?>
         <header>
+            <div class="sign-container">
+                <a href="<?php echo htmlspecialchars($_SESSION['sign_location'])?>" class="button menu-button"><?php echo htmlspecialchars($_SESSION["sign_button"])?></a>
+                <a href="<?php echo htmlspecialchars($_SESSION['register_location'])?>" class="button register-button"><?php echo htmlspecialchars($_SESSION["register_button"])?></a>
+            </div>
             <div class="menu-container">
                 <a href="index.php" class="button menu-button">Domů</a>
                 <a href="scoreboard.php" class="button menu-button">Žebříček hráčů</a>
                 <a href="whatnext.php" class="button menu-button">Co dál?</a>
-            </div>
-            <div class="sign-container">
-                <a href="<?php echo $_SESSION['sign_location']?>" class="button menu-button"><?php echo $_SESSION['sign_button']?></a>
-                <a href="<?php echo $_SESSION['register_location']?>" class="button register-button"><?php echo $_SESSION['register_button']?></a>
-            </div>
+            </div>   
         </header>
         <main>
+            <div class="filter">
+                <div class="order-buttons">
+                    <form method="post">
+                        <label for="desc"></label>
+                        <input type="submit" id="desc" name="desc" class="filter-button" value="Od nejvyššího skóre">
+                        <label for="asc"></label>
+                        <input type="submit" id="asc" name="asc" class="filter-button" value="Od nejnižšího skóre">
+                    </form>
+                </div>
+                <div class="prog-buttons">
+                    <form method="post">
+                        <label for="prog"></label>
+                        <input type="submit" id="prog" name="prog" class="filter-button" value="Programovali">
+                        <label for="noprog"></label>
+                        <input type="submit" id="noprog" name="noprog" class="filter-button" value="Neprogramovali">
+                        <label for="all"></label>
+                        <input type="submit" id="all" name="all" class="filter-button" value="Všichni">
+                    </form>
+                </div>
+            </div>
             <div class="score-table">
                 <div class="score-header">
-                    <div class="score-rank">Pořadí</div>
-                    <div class="score-username">Uživatelské jméno</div>
-                    <div class="score-score">Skóre</div>
+                    <div class="header-id">ID</div>
+                    <div class="header-username">Uživatelské jméno</div>
+                    <div class="header-score">Skóre</div>
                 </div>
                 <div class="score-content">
                     <?php
-                        while($row = mysqli_fetch_array($result)) {
-                            echo '<div class="score-row">';
-                                echo '<div class="score-avatar"><img src="img/avatars/'.$row[0].'.png"></div>';
-                                echo '<div class="score-rank">'.$row[1].'</div>';
-                                echo '<div class="score-username">'.$row[2].'</div>';
-                                echo '<div class="score-score">'.$row[3].'</div>';
-                            echo '</div>';
+                        while($row = $result->fetch_array()) {
+                            echo '<img class="content-avatar" src="img/avatars/'.htmlspecialchars($row[0]).'.png" alt="user avatar">';
+                            echo '<div class="content-id">'.htmlspecialchars($row[1]).'</div>';
+                            echo '<div class="content-username">'.htmlspecialchars($row[2]).'</div>';
+                            echo '<div class="content-score">'.htmlspecialchars($row[3]).'</div>';
                         }
-
-                        $prevLink = '<a href="scoreboard.php?page='. (($page == 1) ? 1 : --$page). '">'.'Prev'.'</a>';
+                    ?>
+                </div>
+                <?php
+                    echo '<div class="pagination">';
+                        if (isset($_GET["page"])) {
+                            $page = $_GET["page"];
+                        } else {
+                            $page = 1;
+                        }
+                        $prevLink = '<a class="pagination-button" href="scoreboard.php?page='. htmlspecialchars((($page == 1) ? 1 : --$page)). '">'.'Zpět'.'</a>';
                         echo $prevLink;
-                        for ($i = 1; $i <= $total_pages; $i++) {   
+
+                        for ($i = 1; $i <= $totalPages; $i++) {   
                             if ($i == $page) {   
-                                $pagLink = '<a class="active" href="scoreboard.php?page='.$i.'">'.$i.'</a>';   
+                                $pagLink = '<a class="active pagination-button" href="scoreboard.php?page='.$i.'">'.$i.'</a>';   
                             } else {   
-                                $pagLink = '<a href="scoreboard.php?page='.$i.'">'.$i.'</a>';    
+                                $pagLink = '<a class="pagination-button" href="scoreboard.php?page='.$i.'">'.$i.'</a>';    
                             }
                             echo $pagLink;
                         };
-                        $nextLink = '<a href="scoreboard.php?page='. (($page == $total_pages) ? $page : ++$page). '">'.'Next'.'</a>';
-                        echo $nextLink;
 
-                        $conn->close();
-                    ?>
-                </div>
+                        $nextLink = '<a class="pagination-button" href="scoreboard.php?page='. htmlspecialchars(($page == $totalPages) ? $page : ++$page). '">'.'Další'.'</a>';
+                        echo $nextLink;
+                    echo '</div>';
+
+                    $conn->close();
+                ?>
             </div>
         </main>
         <footer>

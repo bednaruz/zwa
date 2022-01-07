@@ -19,145 +19,87 @@
     </head>
     <body>
         <?php
-            require_once "../help/buttons.php";
-            require_once "../help/resultstable.php";
             require_once "../help/connect.php";
+            require_once "../help/resultstable.php";
+            require_once "../help/buttons.php";
 
-            if (!isset($_SESSION["overall"])) {
+            if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true) {
+                $conn->close();
                 header("location: ../index.php");
+                exit;
             }
 
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["search_form"]) && !empty($_POST["search"])) {
-                    $name = $_POST["search"];
-                    $sql = "SELECT * FROM users WHERE username='$name'";
-                    if ($result = $conn->query($sql)) {
-                        echo "Query sent successfuly";
-                        if ($overall = $result->fetch_row()) {
-                            $sql = "SELECT * FROM results WHERE id=$overall[0]";
-                            if ($result = $conn->query($sql)) {
-                                echo "Quizz results retrieved successfully";
-                                $results = $result->fetch_row();
-                                $_SESSION["overall"] = $overall;
-                                $_SESSION["score_results"] = [$results[1],$results[3],$results[5],$results[7],$results[9]];
-                                $_SESSION["time_results"] = [$results[2],$results[4],$results[6],$results[8],$results[10]];
-                                
-                                header("location: show.php");
-                            } else {
-                                echo "Error: " . $sql . " : " . $conn->error;
-                            }
-                        } else {
-                            echo "No such user";
-                        }
-                    } else {
-                        echo "Error: " . $sql . " : " . $conn->error;
-                    }
-                } elseif (isset($_POST["delete_form"]) && !empty($_POST["delete"])) {
-                    $name = $_POST["delete"];
-                    $sql = "SELECT * FROM users WHERE username='$name'";
-                    if ($result = $conn->query($sql)) {
-                        echo "Query sent successfuly";
-                        if ($overall = $result->fetch_row()) {
-                            $id = $overall[0];
-                            $sql = "DELETE FROM users WHERE username='$name'";
-                            if ($result = $conn->query($sql)) {
-                                echo "User deleted from users successfuly";
-                                $sql = "DELETE FROM results WHERE id=$id";
-                                if ($result = $conn->query($sql)) {
-                                    echo "User quizz results deleted successfuly";
-                                    if(isset($_SESSION["overall"])) {
-                                      unset($_SESSION["overall"]);
-                                      unset($_SESSION["score_results"]);
-                                      unset($_SESSION["time_results"]);
-                                    }
-                                    header("location: adminprofile.php");
-                                } else {
-                                    echo "Could not delete user quizz results";
-                                }
-                            } else {
-                                echo "Could not delete user from users";
-                            }
-                        } else {
-                            echo "No such user";
-                        }
-                    }
-                }
-            }
+            require_once "userinfo.php";
         ?>
         <header>
+            <div class="sign-container">
+                <a href="../<?php echo htmlspecialchars($_SESSION['sign_location'])?>" class="button menu-button"><?php echo htmlspecialchars($_SESSION["sign_button"])?></a>
+                <a href="../<?php echo htmlspecialchars($_SESSION['register_location'])?>" class="button register-button"><?php echo htmlspecialchars($_SESSION["register_button"])?></a>
+            </div>
             <div class="menu-container">
                 <a href="../index.php" class="button menu-button">Domů</a>
                 <a href="../scoreboard.php" class="button menu-button">Žebříček hráčů</a>
                 <a href="../whatnext.php" class="button menu-button">Co dál?</a>
             </div>
-            <div class="sign-container">
-                <a href="../<?php echo $_SESSION['sign_location']?>" class="button menu-button"><?php echo $_SESSION['sign_button']?></a>
-                <a href="../<?php echo $_SESSION['register_location']?>" class="button register-button"><?php echo $_SESSION['register_button']?></a>
-            </div>
         </header>
         <main>
             <div class="user-info">
                 <div class="user-avatar">
-                    <div><img src="../img/avatars/admin.png"></div>
+                    <div><img src="../img/avatars/admin.png" alt="admin avatar"></div>
                 </div>
                 <div class="user-greeting">
-                    Admin show<br>
-                    <form method="POST">
+                    Admin<br><br>
+                    <form method="post" action="<?php htmlspecialchars("")?>">
                         <label for="search">Vyhledat uživatele: </label>
                         <input type="text" name="search">
-                        <input type="submit" name="search_form" value="Potvrdit"><br>
+                        <input type="submit" class="button register-button" name="search_form" value="Vyhledat"><br>
                     </form>
-                    <form method="POST">
+                    <form method="post" action="<?php htmlspecialchars("")?>">
                         <label for="delete">Vymazat účet uživatele: </label>
                         <input type="text" name="delete">
-                        <input type="submit" name="delete_form" value="Potvrdit"><br>
+                        <input type="submit" class="button register-button" name="delete_form" value="Vymazat"><br>
                     </form>
                 </div>
                 <div class="user-main">
-                  ID: <?php echo $_SESSION["overall"][0]?><br>
-                  Uživatelské jméno: <?php echo $_SESSION["overall"][1]?><br>
-                  Email: <?php echo $_SESSION["overall"][2]?><br>
-                  Rok narození: <?php echo $_SESSION["overall"][3]?><br>
-                  Už někdy programoval/a:
-                  <?php 
-                    if ($_SESSION["overall"][4]) {
-                      echo "Ne";
-                    } else {
-                      echo "Ano";
-                    }
-                  ?><br>
-                  Celkové skóre: <?php echo $_SESSION["overall"][6]?><br>
-                </div>
-                <div class="user-greeting">
-                    Ahoj <?php echo $_SESSION["username"]?>!<br>
-                    Tvoje celkové skóre: <?php echo $_SESSION["score"]?>
-                    id: <?php echo $_SESSION["id"]?>
+                    ID: <?php echo htmlspecialchars($_SESSION["overall"][0])?><br>
+                    Uživatelské jméno: <?php echo htmlspecialchars($_SESSION["overall"][1])?><br>
+                    Email: <?php echo htmlspecialchars($_SESSION["overall"][2])?><br>
+                    Rok narození: <?php echo htmlspecialchars($_SESSION["overall"][3])?><br>
+                    Už někdy programoval/a:
+                    <?php 
+                        if ($_SESSION["overall"][4]) {
+                            echo "Ne";
+                        } else {
+                            echo "Ano";
+                        }
+                    ?><br>
+                    Celkové skóre: <?php echo htmlspecialchars($_SESSION["overall"][6])?><br>
                 </div>
                 <div class="user-score">
-                    <div>
-                        <img src="../img/themes/pi.png" alt="pi">
-                        Skóre: <?php echo $_SESSION["score_results"][0]?><br>
-                        Čas: <?php echo $_SESSION["time_results"][0]?>
+                    <div class="quizz">
+                        <img class="quizz-img" src="../img/themes/pi.png" alt="pi"><br>
+                        Skóre: <?php echo htmlspecialchars($_SESSION["score_results"][0])?><br>
+                        Čas: <?php echo htmlspecialchars($_SESSION["time_results"][0])?>
                     </div>
-                    <div>
-                        <img src="../img/themes/code.png" alt="code parentheses">
-                        Skóre: <?php echo $_SESSION["score_results"][1]?><br>
-                        Čas: <?php echo $_SESSION["time_results"][1]?>
+                    <div class="quizz">
+                        <img class="quizz-img" src="../img/themes/code.png" alt="code parentheses"><br>
+                        Skóre: <?php echo htmlspecialchars($_SESSION["score_results"][1])?><br>
+                        Čas: <?php echo htmlspecialchars($_SESSION["time_results"][1])?>
                     </div>
-                    <div>
-                        <img src="../img/themes/internet.png" alt="internet">
-                        Skóre: <?php echo $_SESSION["score_results"][2]?><br>
-                        Čas: <?php echo $_SESSION["time_results"][2]?>
+                    <div class="quizz">
+                        <img class="quizz-img" src="../img/themes/internet.png" alt="internet"><br>
+                        Skóre: <?php echo htmlspecialchars($_SESSION["score_results"][2])?><br>
+                        Čas: <?php echo htmlspecialchars($_SESSION["time_results"][2])?>
                     </div>
-                    <div>
-                        <img src="../img/themes/transistor.png" alt="transistor">
-                        Skóre: <?php echo $_SESSION["score_results"][3]?><br>
-                        Čas: <?php echo $_SESSION["time_results"][3]?>
+                    <div class="quizz">
+                        <img class="quizz-img" src="../img/themes/transistor.png" alt="transistor"><br>
+                        Skóre: <?php echo htmlspecialchars($_SESSION["score_results"][3])?><br>
+                        Čas: <?php echo htmlspecialchars($_SESSION["time_results"][3])?>
                     </div>
-                    <div>
-                        <img src="../img/themes/chemistry.png" alt="chemistry">
-                        Skóre: <?php echo $_SESSION["score_results"][4]?><br>
-                        Čas: <?php echo $_SESSION["time_results"][4]?>
+                    <div class="quizz">
+                        <img class="quizz-img" src="../img/themes/chemistry.png" alt="chemistry"><br>
+                        Skóre: <?php echo htmlspecialchars($_SESSION["score_results"][4])?><br>
+                        Čas: <?php echo htmlspecialchars($_SESSION["time_results"][4])?>
                     </div>
                 </div>
             </div>

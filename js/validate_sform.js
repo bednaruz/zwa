@@ -43,6 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const sform = document.getElementById("signin");
     
     if (sform !== null) {
+
+        sform.elements["username"].removeAttribute("required");
+        sform.elements["pwd"].removeAttribute("required");
+
+        sform.elements["username"].removeAttribute("pattern");
+        sform.elements["pwd"].removeAttribute("pattern");
+
         sform.addEventListener("submit", (event) => {
 
             event.preventDefault();

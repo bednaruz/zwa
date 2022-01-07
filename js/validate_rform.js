@@ -55,25 +55,6 @@ function validateBirthyear(input, message) {
     }
 }
 
-function validateProgrammed(input, message){
-    var rbs = document.getElementsByName("programmed");
-    let selectedValue = "";
-    error = document.getElementById("programmed_error");
-    for (var rb of rbs) {
-        if (rb.checked) {
-            selectedValue = input.value;
-            break;
-        }
-    }
-    if (selectedValue === "") {
-        error.textContent = message;
-        return false;
-    } else {
-        error.textContent = "";
-        return true;
-    }
-}
-
 function validatePwd(input, message1, message2) {
     const regexpwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$$/;
     error = document.getElementById("pwd_error");
@@ -102,20 +83,32 @@ function validateMatch(input1, input2, message) {
 
 document.addEventListener("DOMContentLoaded", () => {
     const rform = document.getElementById("register");
-    
+
     if (rform !== null) {
+
+        rform.elements["username"].removeAttribute("required");
+        rform.elements["mail"].removeAttribute("required");
+        rform.elements["birthyear"].removeAttribute("required");
+        rform.elements["fpwd"].removeAttribute("required");
+        rform.elements["spwd"].removeAttribute("required");
+
+        rform.elements["username"].removeAttribute("pattern");
+        rform.elements["mail"].removeAttribute("pattern");
+        rform.elements["birthyear"].removeAttribute("pattern");
+        rform.elements["fpwd"].removeAttribute("pattern");
+        rform.elements["spwd"].removeAttribute("pattern");
+
         rform.addEventListener("submit", (event) => {
 
             event.preventDefault();
-                
+            
             let usernameValid = validateUsername(rform.elements["username"], USERNAME_REQUIRED, USERNAME_LONG);
             let mailValid = validateMail(rform.elements["mail"], MAIL_REQUIRED, MAIL_INVALID);
             let birthyearValid = validateBirthyear(rform.elements["birthyear"], BIRTHYEAR_INVALID);
-            let programmedValid = validateProgrammed(rform.elements["programmed"], PROGRAMMED_INVALID);
             let fpwdValid = validatePwd(rform.elements["fpwd"], PWD_REQUIRED, PWD_INVALID);
             let pwdMatch = validateMatch(rform.elements["fpwd"], rform.elements["spwd"], PWD_NOMATCH);
-
-            if (usernameValid && mailValid && birthyearValid && programmedValid && fpwdValid && pwdMatch) {
+            
+            if (usernameValid && mailValid && birthyearValid && fpwdValid && pwdMatch) {
                 rform.submit();
             }
         });

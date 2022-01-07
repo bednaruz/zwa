@@ -1,52 +1,57 @@
 /*-----------------main elements-----------------*/
 html,body {
-    display: grid;
     background-color: black;
     color: ghostwhite;
     font-family: 'Dosis', sans-serif;
+    text-decoration: none;
     width: 100%;
     height: 100%;
     margin: 0%;
     padding: 0%;
 }
 
-header {
-    grid-row: 1;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    row-gap: 5%;
-    column-gap: 2%;
+body {
+    display: grid;
 }
 
-main {
-    grid-row: 2;
-}
+    header {
+        grid-row: 1;
+        display: inline-grid;
+        grid-template-rows: auto auto;
+        grid-template-columns: auto auto;
+        justify-items: end;
+    }
+
+    main {
+        grid-row: 2;
+    }
 
 footer {
     grid-row: 3;
     border-top: 3px solid deeppink;
     width: 100%;
-    height: 10%;
+    align-self: center;
     bottom: 0;
 }
 /*------------------------------------------------*/
 /*-----------------header buttons-----------------*/
 .sign-container {
-    order: 1;
+    grid-column: 2;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-items: center;
     justify-content: flex-end;
     margin: 2% 5% 0% auto;
     max-width: 100%;
 }
 
 .menu-container {
-    order: 2;
+    grid-column: 2;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-items: center;
     justify-content: flex-end;
     margin: 2% 20% 2% auto;
     max-width: 100%;
@@ -54,28 +59,37 @@ footer {
 
 .button {
     flex-shrink: 0;
+    font-size: 15pt;
+    padding: 6% 10%;
+    margin: 3%;
+    color: ghostwhite;
+    text-decoration: none;
+}
+
+.button:hover,
+.button:focus {
+    box-shadow: 0 0.7em 0.7em -0.4em cyan;
+    transform: translateY(-0.25em);
+}
+
+.register-button {
     border-style: solid;
     border-width: 3px;
     border-color: deeppink;
     border-radius: 30px;
-    font-size: 15pt;
-    font-family: 'Dosis', sans-serif;
-    padding: 6% 10%;
-    margin: 3%;
-    text-decoration: none;
-}
-
-.register-button {
     background-color:deeppink;
-    font-weight: 900;
     color: black;
+    font-weight: 900;
 }
 
 .menu-button {
-    background-color: black;
     font-weight: 550;
-    color: ghostwhite;
+    border-style: solid;
+    border-width: 3px;
+    border-color: deeppink;
+    border-radius: 30px;
 }
+
 /*----------------------------------------------*/
 /*-----------------theme circle-----------------*/
 .circle {
@@ -89,6 +103,16 @@ footer {
     border-style: dotted;
     padding: 0;
     margin: 5% auto;
+}
+
+.theme {
+    transition-duration: 0.3s;
+}
+
+.theme:hover {
+    transform:scale(1.3,1.3);
+    -webkit-transform:scale(1.3,1.3);
+    -moz-transform:scale(1.3,1.3);
 }
 
 #theme1 {
@@ -172,8 +196,10 @@ input[type=text],[type=password],[type=number],[type=email] {
     transition-duration: 0.4s;
 }
 
-.submit:hover {
-    box-shadow: 0 12px 16px 0 rgb(0, 238, 255),0 17px 50px 0 rgb(0, 217, 255);
+.submit:hover,
+.submit:focus {
+    box-shadow: inset 0 -3.25em 0 0 blueviolet;
+    color: ghostwhite; 
 }
 /*----------------------------------------------*/
 /*----------------contact info------------------*/
@@ -183,6 +209,8 @@ input[type=text],[type=password],[type=number],[type=email] {
     font-style: normal;
     float: right;
     color: ghostwhite;
+    margin-top: 15px;
+    text-decoration: none;
 }
 /*----------------------------------------------*/
 /*-----------------whatnext.php------------------*/
@@ -190,7 +218,7 @@ input[type=text],[type=password],[type=number],[type=email] {
     text-align: center;
 }
 
-.hobby_title {
+.hobby-title {
     text-align: center;
     margin-top: 60px;
     margin-bottom: 30px;
@@ -198,20 +226,20 @@ input[type=text],[type=password],[type=number],[type=email] {
     font-weight: bold;
 }
 
-.hobby_row {
+.hobby-row {
     display: grid;
 }
 
-.hobby_column1 {
+.hobby-column1 {
     grid-column: 1;
 }
 
-.hobby_column2 {
+.hobby-column2 {
     grid-column: 2;
 }
 
-.hobby_img {
-    width: 30vw;
+.hobby-img {
+    width: 20vw;
     height: auto;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
@@ -220,7 +248,7 @@ input[type=text],[type=password],[type=number],[type=email] {
     transition: all 500ms ease;
 }
 
-.hobby_img:hover {
+.hobby-img:hover {
     opacity: 0.5;
 }
 
@@ -230,6 +258,44 @@ input[type=text],[type=password],[type=number],[type=email] {
 .question-container {
     border-color:mediumspringgreen;
 }
+
+.question {
+    font-size: 20pt;
+}
+
+.results {
+    font-size: 40pt;
+    margin-left: 80pt;
+    margin-bottom: 40pt;
+    color: blueviolet;
+}
+
+.results-detail {
+    font-size: 30pt;
+    margin-left: 80pt;
+}
+
+.results-points {
+    font-size: 30pt;
+    margin-left: 80pt;
+    color: cyan;
+}
+
+.results-answered {
+    color: red;
+}
+
+.quizz {
+    font-size: 15pt;
+    display: flex;
+    align-items: center;
+}
+
+.quizz-img {
+    width: 20%;
+    height: auto;
+}
+
 /*----------------------------------------------*/
 span {
     color: red;
@@ -237,48 +303,121 @@ span {
 /*------------------scoreboard.php--------------*/
 .score-table {
     display: grid;
-    align-items: center;
+    grid-template-rows: 6;
+    grid-template-columns: 4;
     margin: 1vw auto;
 }
 
 .score-header {
-    display: grid;
     grid-row: 1;
-    border-bottom: 5px outset darkturquoise;
-    padding: 1% 8%;
-    text-align: center;
+    display: grid;
+    justify-items: center;
+    font-size: 20pt;
+    border-bottom: 3px solid deeppink;
 }
+    .header-id {
+        grid-column: 2;
+        padding-bottom: 2%;
+    }
+
+    .header-username {
+        grid-column: 3;
+        padding-bottom: 2%;
+    }
+
+    .header-score {
+        grid-column: 4;
+        padding-bottom: 2%;
+    }
 
 .score-content {
+    grid-row: 2;
     display: grid;
-    padding: 1%;
-    align-self: center;
+    font-size: 20pt;
+    padding-top: 1%;
 }
 
-.score-row {
+    .content-avatar {
+        grid-column: 1;
+        width: 30pt;
+        height: auto;
+        justify-self: end;
+    }
+
+    .content-id {
+        grid-column: 2;
+        justify-self: center;
+    }
+
+    .content-username {
+        grid-column: 3;
+        justify-self: center;
+        font-weight: bold;
+    }
+
+    .content-score {
+        grid-column: 4;
+        justify-self: center;
+    }
+
+.filter-container {
     display: grid;
-    text-align: center;
 }
 
-.score-avatar {
-    display: grid;
-    grid-column: 1;
+.order-buttons {
+    order: 1;
 }
 
-.score-rank {
-    display: grid;
-    grid-column: 2;
+.prog-buttons {
+    order: 2;
 }
 
-.score-username {
-    display: grid;
-    grid-column: 3;
-    font-weight: bold;
+.filter-button {
+    border-style: dotted;
+    border-width: 3px;
+    border-color: lawngreen;
+    border-radius: 100px;
+    background-color:black;
+    color: lawngreen;
+    flex-shrink: 0;
+    font-size: 15pt;
+    font-weight: 900;
+    font-family: 'Dosis', sans-serif;
+    padding: 0.5%;
+    margin: 0.5%;
+    text-decoration: none;
+    transition-duration: 0.5s;
 }
 
-.score-score {
-    display: grid;
-    grid-column: 4;
+.filter-button:hover,
+.filter-button:focus {
+    box-shadow: inset 0 -3.25em 0 0 lawngreen;
+    color: black;
+    border-style: solid;
+}
+
+.pagination {
+    display: inline-block;
+    margin: auto;
+}
+
+.pagination-button {
+    border-style: hidden;
+    background-color:black;
+    color: lawngreen;
+    flex-shrink: 0;
+    font-size: 20pt;
+    font-weight: 900;
+    font-family: 'Dosis', sans-serif;
+    padding: 0.5%;
+    margin: 10%;
+    text-decoration: none;
+    transition-duration: 0.5s;
+}
+
+.active {
+    color: deeppink;
+    text-decoration: dashed;
 }
 /*----------------------------------------------*/
 /*-----userprofile.php and adminprofile.php-----*/
@@ -288,7 +427,6 @@ span {
 
 .avatar:hover .avatar-content {
     display: block;
-    /*grid-template-columns: repeat(3, 1fr);*/
 }
 
 .avatar button {
@@ -303,25 +441,63 @@ span {
     margin: 10px 2px;
 }
 
+.avatar {
+    display: inline-block;
+    justify-content: center;
+}
+
 .avatar-option {
-    width: 300px;
-    height: 300px;
+    width: 100px;
+    height: 100px;
     color: transparent;
 }
 
 .av-green {
-    background-image: url("../img/avatars/green.png");
+    background-image: url("../img/avatars/greensmol.png");
 }
 .av-red {
-    background-image: url("../img/avatars/red.png");
+    background-image: url("../img/avatars/redsmol.png");
 }
 .av-blue {
-    background-image: url("../img/avatars/blue.png");
+    background-image: url("../img/avatars/bluesmol.png");
 }
 .av-purple {
-    background-image: url("../img/avatars/purple.png");
+    background-image: url("../img/avatars/purplesmol.png");
 }
 .av-white {
-    background-image: url("../img/avatars/white.png");
+    background-image: url("../img/avatars/whitesmol.png");
+}
+
+.user-greeting {
+    font-size: 30pt;
+    font-weight: bold;
+    grid-row: 1;
+    grid-column: 2;
+    margin: auto 10%;
+}
+
+.user-info-4 {
+    display: grid;
+    grid-template-columns: 4;
+    grid-template-rows: 1;
+}
+
+.user-info {
+    display: grid;
+    grid-template-columns: 3;
+    grid-template-rows: 1;
+}
+
+.user-score {
+    grid-row: 1;
+    grid-column: 3;
+    font-weight: bold;
+}
+
+.user-main {
+    font-size: 20pt;
+    font-weight: bold;
+    grid-column: 4;
+    align-self: center;
 }
 /*----------------------------------------------*/

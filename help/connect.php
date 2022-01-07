@@ -5,9 +5,12 @@
     $dbname = "bednaruz";
 
     $conn = mysqli_connect($servername, $user, $pass, $dbname);
-
-    if (mysqli_connect_error()) {
-        die("Database connection failed: " . mysqli_connect_error());
+    if (!$conn) {
+        header("location: ../img/marvin.png");
+        die();
     }
-    echo "Connected successfully";
+    if ($conn->connect_error) {
+        header("location: ../img/marvin.png");
+        die();
+    }
 ?>

@@ -17,146 +17,181 @@
         <link rel="manifest" href="img/favicon/site.webmanifest">
         <script src="js/pwd_strength_bar.js"></script>
         <script src="js/validate_rform.js"></script>
+        <script src="js/prevent_resubmit.js"></script>
         <title>Let's learn 💻</title>
     </head>
     <body>
         <?php
             require_once "help/connect.php";
             require_once "help/resultstable.php";
-            //require_once "tempdrop.php";
-            //echo "Table dropped";
-
-            $img = "green";
-
-            $sql = "CREATE TABLE users(
-            id INT(255) AUTO_INCREMENT,
-            Unique(id),
-            username VARCHAR(30) NOT NULL,
-            mail VARCHAR(50) NOT NULL,
-            birthyear SMALLINT(8) DEFAULT NULL,
-            programmed TINYINT(1) DEFAULT NULL,
-            pwd VARCHAR(255) NOT NULL,
-            score INT(255) DEFAULT 0,
-            avatar VARCHAR(20) DEFAULT '$img'
-            )";
-                
-            if ($conn->query($sql)) {
-                echo "Table users created successfully";
-            } else {
-                echo "Error creating table: " . $conn->error;
-            }
+            require_once "help/buttons.php";
+            require_once "help/testinput.php";
 
             $username = $mail = $birthyear = $fpwd = $spwd = "";
             $programmed = 0;
-            $usernameErr = $mailErr = $pwdErr = "";
+            $img = "green";
 
-            function Test_input($data)
-            {
-                $data = trim($data);
-                $data = stripslashes($data);
-                $data = htmlspecialchars($data);
-                return $data;
+            $sql = "CREATE TABLE IF NOT EXISTS users(
+                id INT(255) AUTO_INCREMENT,
+                Unique(id),
+                username VARCHAR(30) NOT NULL,
+                mail VARCHAR(50) NOT NULL,
+                birthyear SMALLINT(8) DEFAULT NULL,
+                programmed TINYINT(1) DEFAULT NULL,
+                pwd VARCHAR(255) NOT NULL,
+                score INT(255) DEFAULT 0,
+                avatar VARCHAR(20) DEFAULT '$img'
+            )";
+                
+            if (!$conn->query($sql)) {
+                $conn->close();
+                header("location: img/marvin.png");
+                die();
             }
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (empty($_POST["username"])) {
-                    $usernameErr = "Uživatelské jméno je povinné";
+                    $_SESSION["usernameErr"] = "Uživatelské jméno je povinné";
                 } else {
-                    $username = Test_input($_POST["username"]);
+                    $username = $conn->real_escape_string($_POST['username']);
+
+                    $sql = "SELECT
+                                *
+                            FROM
+                                users
+                            WHERE
+                                username='".$username."'";
+
+                    $result = $conn->query($sql);
+                    if ($result->num_rows) {
+                        $_SESSION["usernameErr"] = "Uživatelské jméno je už zabrané";
+                    } else {
+                        $username = testInput($_POST["username"]);
+                        $_SESSION["usernameErr"] = "";
+                    }
                 }
+
                 if (empty($_POST["mail"])) {
-                    $mailErr = "E-mail je povinný";
+                    $_SESSION["mailErr"] = "E-mail je povinný";
                 } else {
-                    $mail = Test_input($_POST["mail"]);
+                    $mail = testInput($_POST["mail"]);
+                    $_SESSION["mailErr"] = "";
                 }
-                $birthyear = Test_input($_POST["birthyear"]);
-                if (Test_input($_POST["programmed"]) == "yes") {
+
+                $birthyear = testInput($_POST["birthyear"]);
+
+                if (testInput($_POST["programmed"][0]) == "yes") {
                     $programmed = 1;
                 } else {
                     $programmed = 0;
                 }
+
                 if (empty($_POST["fpwd"]) or empty($_POST["spwd"])) {
-                    $pwdErr = "Heslo je povinné";
-                } else {
-                    $fpwd = Test_input($_POST["fpwd"]);
-                    $spwd = Test_input($_POST["spwd"]);
+                    $_SESSION["pwdErr"] = "Heslo je povinné";
+                } elseif ($_SESSION["usernameErr"] === "" && $_SESSION["mailErr"] === "") {
+                    $_SESSION["pwdErr"] = "";
+                    $fpwd = testInput($_POST["fpwd"]);
+                    $spwd = testInput($_POST["spwd"]);
+
                     if ($_POST["fpwd"]!= $_POST["spwd"]) {
-                        $pwdErr = "Hesla se neshodují";
+                        $_SESSION["matchErr"] = "Hesla se neshodují";
                     } else {
+                        $_SESSION["matchErr"] = "";
+
                         $pwd = password_hash($fpwd, PASSWORD_DEFAULT);
-                        $sql = "INSERT INTO users(username, mail, birthyear, programmed, pwd) VALUES ('$username', '$mail', $birthyear, $programmed, '$pwd')";
+
+                        $sql = "INSERT INTO
+                                    users(username, mail, birthyear, programmed, pwd)
+                                VALUES
+                                    ('$username', '$mail', $birthyear, $programmed, '$pwd')";
+                        
                         if ($conn->query($sql)) {
-                            $sql = "SELECT id FROM users WHERE username='$username'";
+
+                            $sql = "SELECT
+                                        id
+                                    FROM
+                                        users
+                                    WHERE
+                                        username='$username'";
+
                             if($result = $conn->query($sql)) {
                                 $_SESSION["id"] = $result->fetch_row()[0];
                                 $id = $_SESSION["id"];
-                                echo "Found the id of user";
 
                                 require_once "help/resultstable.php";
-                                $sql = "INSERT INTO results(id) VALUES ($id)";
-                                if ($conn->query($sql)) {
-                                    echo "<br>New record in results created succesfully<br>";
-                                } else {
-                                    echo "Error: " . $sql . " : " . $conn->error;
+
+                                $sql = "INSERT INTO
+                                            results(id)
+                                        VALUES
+                                            ($id)";
+                                
+                                if (!$conn->query($sql)) {
+                                    $conn->close();
+                                    header("location: img/marvin.png");
+                                    die();
                                 }
 
+                                $conn->close();
+                                unset($_SESSION["usernameErr"],$_SESSION["mailErr"],$_SESSION["pwdErr"],$_SESSION["matchErr"]);
                                 header("location: signin.php");
+                                exit;
                             } else {
-                                echo "Error: " . $sql . " : " . $conn->error;
+                                $conn->close();
+                                header("location: img/marvin.png");
+                                die();
                             }
                         } else {
-                            echo "Error: " . $sql . "<br>" . $conn->error;
+                            $conn->close();
+                            header("location: img/marvin.png");
+                            die();
                         }
                     }
                 }      
             }
-
             $conn->close();
-
-            require_once "help/buttons.php";
         ?>
         <header>
+            <div class="sign-container">
+                <a href="<?php echo htmlspecialchars($_SESSION['sign_location'])?>" class="button menu-button"><?php echo htmlspecialchars($_SESSION["sign_button"])?></a>
+                <a href="<?php echo htmlspecialchars($_SESSION['register_location'])?>" class="button register-button"><?php echo htmlspecialchars($_SESSION["register_button"])?></a>
+            </div>
             <div class="menu-container">
                 <a href="index.php" class="button menu-button">Domů</a>
                 <a href="scoreboard.php" class="button menu-button">Žebříček hráčů</a>
                 <a href="whatnext.php" class="button menu-button">Co dál?</a>
             </div>
-            <div class="sign-container">
-                <a href="<?php echo $_SESSION['sign_location']?>" class="button menu-button"><?php echo $_SESSION['sign_button']?></a>
-                <a href="<?php echo $_SESSION['register_location']?>" class="button register-button"><?php echo $_SESSION['register_button']?></a>
-            </div>
         </header>
         <main>
             <div class="center-inline-flex">
                 <div class="main-container register-container">
-                    <form id="register" class="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                    <form id="register" class="register-form" method="post" autocomplete="on" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                         <label for="username">Uživatelské jméno: *</label><br>
-                        <input type="text" name="username" pattern="^([a-zA-Z0-9_-]){1,30}$" required><br>
-                        <span id="username_error"><?php echo $usernameErr;?></span><br>
+                        <input type="text" id="username" name="username" pattern="^([a-zA-Z0-9_-]){1,30}$" required><br>
+                        <span id="username_error"><?php echo isset($_SESSION["usernameErr"]) ? $_SESSION["usernameErr"] : ""?></span><br>
 
                         <label for="mail">E-mail: *</label><br>
-                        <input type="email" name="mail" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required><br>
-                        <span id="mail_error"><?php echo $mailErr;?></span><br>
+                        <input type="email" id="mail" name="mail" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required><br>
+                        <span id="mail_error"><?php echo isset($_SESSION["mailErr"]) ? $_SESSION["mailErr"] : ""?></span><br>
 
                         <label for="birthyear">Rok narození:</label><br>
-                        <input type="number" name="birthyear" value="2008" pattern="[1910-2017]{4}"><br>
+                        <input type="number" id="birthyear" name="birthyear" value="2008"><br>
                         <span id="birthyear_error"></span><br>
 
                         Už jsi v něčem programoval/a?<br>
-                        <input type="radio" name="programmed" value="yes">
-                        <label for="programmed">Ano</label><br>
-                        <input type="radio" name="programmed" value="no" checked="checked">
-                        <label for="programmed">Ne</label><br>
+                        <input type="radio" id="programmed1" name="programmed[]" value="yes">
+                        <label for="programmed1">Ano</label><br>
+                        <input type="radio" id="programmed2" name="programmed[]" value="no" checked>
+                        <label for="programmed2">Ne</label><br>
                         <span id="programmed_error"></span><br>
 
                         <label for="fpwd">Heslo: *</label><br>
-                        <input type="password" name="fpwd" id="fpwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
+                        <input type="password"  id="fpwd" name="fpwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
                         <meter id="pwd_meter" low="33" high="66" max="100" optimum="70" value="0"></meter><br>
-                        <span id="pwd_error"><?php echo $pwdErr;?></span><br>
+                        <span id="pwd_error"><?php echo isset($_SESSION["pwdErr"]) ? $_SESSION["pwdErr"] : ""?></span><br>
 
                         <label for="spwd">Heslo znovu: *</label><br>
-                        <input type="password" name="spwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
-                        <span id="match_error"><?php echo $pwdErr;?></span><br>
+                        <input type="password" id="spwd" name="spwd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}" required><br>
+                        <span id="match_error"><?php echo isset($_SESSION["matchErr"]) ? $_SESSION["matchErr"] : ""?></span><br>
 
                         <input type="submit" class="submit" name="register_submit" value="Potvrdit"><br>
                     </form>

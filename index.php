@@ -19,34 +19,36 @@
     </head>
     <body>
         <?php
-            if (isset($_SESSION["loggedin"])){
-                echo $_SESSION["loggedin"];
-            } else {
-                echo "Session isnt set";
+            $file = 'help/connect.php';
+            if (!file_exists($file)) {
+                header("location: img/marvin.png");
+                die();
             }
+            require_once "help/connect.php";
             require_once "help/buttons.php";
+            require_once "help/createquizztables.php";
         ?>
         <header>
+            <div class="sign-container">
+                <a href="<?php echo htmlspecialchars($_SESSION['sign_location'])?>" class="button menu-button"><?php echo htmlspecialchars($_SESSION["sign_button"])?></a>
+                <a href="<?php echo htmlspecialchars($_SESSION['register_location'])?>" class="button register-button"><?php echo htmlspecialchars($_SESSION["register_button"])?></a>
+            </div>
             <div class="menu-container">
                 <a href="index.php" class="button menu-button">Domů</a>
                 <a href="scoreboard.php" class="button menu-button">Žebříček hráčů</a>
                 <a href="whatnext.php" class="button menu-button">Co dál?</a>
             </div>
-            <div class="sign-container">
-                <a href="<?php echo $_SESSION['sign_location']?>" class="button menu-button"><?php echo $_SESSION['sign_button']?></a>
-                <a href="<?php echo $_SESSION['register_location']?>" class="button register-button"><?php echo $_SESSION['register_button']?></a>
-            </div>
         </header>
         <main>
             <div class="circle">
-                <div id="theme1"><a href="quizzes/quizz1.php" id="quizz1" class="theme" action=""><img class="theme-image" src="img/themes/pi.png" alt="pi"></a></div>
+                <div id="theme1"><a href="quizzes/quizz1.php" id="quizz1" class="theme"><img class="theme-image" src="img/themes/pi.png" alt="pi"></a></div>
                 <div id="theme24">
-                    <a href="quizzes/quizz4.php" id="quizz4"><img class="theme-image" src="img/themes/transistor.png" alt="transistor"></a>
-                    <a href="quizzes/quizz2.php" id="quizz2"><img class="theme-image" src="img/themes/code.png" alt="code parenthesis"></a> 
+                    <a href="quizzes/quizz4.php" id="quizz4" class="theme"><img class="theme-image" src="img/themes/transistor.png" alt="transistor"></a>
+                    <a href="quizzes/quizz2.php" id="quizz2" class="theme"><img class="theme-image" src="img/themes/code.png" alt="code parenthesis"></a> 
                 </div>
                 <div id="theme35">
-                    <a href="quizzes/quizz5.php" id="quizz5"><img class="theme-image" src="img/themes/chemistry.png" alt="chemistry"></a>
-                    <a href="quizzes/quizz3.php" id="quizz3"><img class="theme-image" src="img/themes/internet.png" alt="internet"></a>
+                    <a href="quizzes/quizz5.php" id="quizz5" class="theme"><img class="theme-image" src="img/themes/chemistry.png" alt="chemistry"></a>
+                    <a href="quizzes/quizz3.php" id="quizz3" class="theme"><img class="theme-image" src="img/themes/internet.png" alt="internet"></a>
                 </div>
             </div>
         </main>

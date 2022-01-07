@@ -1,8 +1,7 @@
 <?php
-    require_once "connect.php";
     $time = "00:00:00";
 
-    $sql = "CREATE TABLE results(
+    $sql = "CREATE TABLE IF NOT EXISTS results(
         id INT(255), Unique(id),
         score1 INT(255) DEFAULT 0,
         time1 VARCHAR(255) DEFAULT '$time',
@@ -16,9 +15,9 @@
         time5 VARCHAR(255) DEFAULT '$time'
     )";
 
-    if ($conn->query($sql)) {
-        echo "Table results created succesfully";
-    } else {
-        echo "Error: " . $sql . " : " . $conn->error;
+    if (!$conn->query($sql)) {
+        $conn->close();
+        header("location: ../img/marvin.png");
+        die();
     }
 ?>

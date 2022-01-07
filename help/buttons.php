@@ -2,7 +2,7 @@
     if (!isset($_SESSION)) {
         session_start();
     }
-    if (isset($_SESSION["loggedin"]) and $_SESSION["loggedin"]){
+    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"]){
         $_SESSION["sign_button"] = "Odhlásit se";
         $_SESSION["register_button"] = "Můj účet";
         $_SESSION["sign_location"] = 'signout.php';
